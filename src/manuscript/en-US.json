@@ -1,0 +1,40 @@
+{
+  "lang": "en-US",
+  "pages": [{
+    "lines": [
+      "Once upon a time there was a hummingbird"
+    ],
+    "queues": [{
+      "word": "hummingbird",
+      "actor": "bird",
+      "action": "lookAround"
+    }]
+  }, {
+    "lines": [
+      "The hummingbird made a great leap"
+    ],
+    "queues": [{
+      "word": "great",
+      "actor": "bird",
+      "action": "flapWings"
+    }]
+  }, {
+    "lines": [
+      "But the hummingbird was caught by the wind"
+    ],
+    "queues": [{
+      "word": "caught",
+      "actor": "bird",
+      "action": "dazed"
+    }]
+  }, {
+    "lines": [
+      "The humingbird was very scared to be alone on the ground"
+    ],
+    "queues": [{
+      "word": "scared",
+      "actor": "bird",
+      "action": "cry"
+    }]
+  }]
+}

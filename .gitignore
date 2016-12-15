@@ -1,0 +1,13 @@
+# OS specific and meta files
+*.DS_Store
+
+# Libraries
+node_modules
+
+# Built files
+public/*.js
+
+# Logs
+logs
+*.log
+npm-debug.log*

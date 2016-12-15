@@ -1,0 +1,29 @@
+{
+  "name": "hummingbird",
+  "version": "1.0.0",
+  "description": "Proof of concept of speech recognition in phaser game",
+  "scripts": {
+    "test": "eslint --ignore-pattern public/",
+    "build:app": "browserify src/index.js -t babelify -t envify -t brfs -g unassertify -o public/index.js",
+    "build:lib": "browserify src/lib.js -o public/lib.js",
+    "build": "npm run build:lib && npm run build:app",
+    "dev": "NODE_ENV=development budo src/index.js:index.js --dir public -- -t babelify -t envify -t brfs"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.18.0",
+    "babelify": "^7.3.0",
+    "brfs": "^1.4.3",
+    "browserify": "^13.1.1",
+    "budo": "^9.3.0",
+    "envify": "^4.0.0",
+    "phaser": "^2.6.2",
+    "send-action": "^3.0.0",
+    "uglify-js": "^2.7.5",
+    "unassertify": "^2.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^3.12.1"
+  }
+}
