@@ -5,7 +5,7 @@ import Page from './page';
  * http://phaser.io/docs/2.6.2/Phaser.State.html#methods
  */
 
-export default class Intro extends Page {
+export default class MyPage extends Page {
   constructor(...args) {
     super(...args);
     // Do object initialization stuff here or remove if not applicable
