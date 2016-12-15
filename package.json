@@ -1,7 +1,7 @@
 {
-  "name": "hummingbird",
-  "version": "1.0.0",
-  "description": "Proof of concept of speech recognition in phaser game",
+  "name": "the-hummingbird",
+  "version": "0.1.0",
+  "description": "An interactive story about the life of a hummingbird controlled by speech",
   "scripts": {
     "test": "eslint --ignore-pattern public/",
     "build:app": "browserify src/index.js -t babelify -t envify -t brfs -g unassertify -o public/index.js",
