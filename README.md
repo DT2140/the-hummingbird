@@ -14,7 +14,7 @@ Ensure that you have the latest version (> 6) of node [Node.js](https://nodejs.o
 
 First install all application dependencies
 
-```
+```bash
 $ npm install
 ```
 
@@ -22,7 +22,7 @@ On first setup, always build before starting development server.
 
 ### Build
 
-```
+```bash
 # On UNIX/macOS
 $ STORY_LANG=en-US npm run build
 
@@ -38,7 +38,7 @@ You can also jump to a specific page by calling `STORY.send('page', 3)` in the b
 
 To fire up the development server, run the following command
 
-```
+```bash
 # On UNIX/macOS
 $ STORY_LANG=en-US NODE_ENV=development npm run dev
 
