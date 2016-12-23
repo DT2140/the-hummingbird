@@ -8,9 +8,9 @@ The application uses [Phaser](http://phaser.io) for handling story graphics. All
 
 ## Setup
 
-Ensure that you have the latest version (> 6) of node Node.js installed. When building the application language must be supplied as an environment variable. Languages are stored in [src/manuscript](src/manuscript) and are specified without file extension.
+Ensure that you have the latest version (> 6) of node [Node.js](https://nodejs.org) installed. When building the application a language must be supplied as an environment variable. Languages are stored in [src/manuscript](src/manuscript) and are specified without file extension.
 
-## Dependencies
+### Dependencies
 
 First install all application dependencies
 
@@ -23,17 +23,27 @@ On first setup, always build before starting development server.
 ### Build
 
 ```
+# On UNIX/macOS
 $ STORY_LANG=en-US npm run build
+
+# On Windows
+$ set STORY_LANG=en-US&&npm run build
 ```
 
 ### Development
 
-During development state is printed to console on every change and to simulate saying reading the script into the microphone keep the space key pressed down and then press the "x" key.
+During development the state is printed to the console on every change and to simulate  reading the script into the microphone keep the space key pressed down and then press the `x` key.
 
 You can also jump to a specific page by calling `STORY.send('page', 3)` in the browser console.
 
+To fire up the development server, run the following command
+
 ```
-$ STORY_LANG=en-US npm run dev
+# On UNIX/macOS
+$ STORY_LANG=en-US NODE_ENV=development npm run dev
+
+# On Windows
+$ set STORY_LANG=en-US&&set NODE_ENV=development&&npm run dev
 ```
 
 ### Serve production

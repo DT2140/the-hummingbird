@@ -7,7 +7,7 @@
     "build:app": "browserify src/index.js -t babelify -t envify -t brfs -g unassertify -o public/index.js",
     "build:lib": "browserify src/lib.js -o public/lib.js",
     "build": "npm run build:lib && npm run build:app",
-    "dev": "NODE_ENV=development budo src/index.js:index.js --dir public -- -t babelify -t envify -t brfs"
+    "dev": "budo src/index.js:index.js --dir public -- -t babelify -t envify -t brfs"
   },
   "author": "",
   "license": "MIT",
