@@ -4,10 +4,10 @@
   "description": "An interactive story about the life of a hummingbird controlled by speech",
   "scripts": {
     "test": "eslint --ignore-pattern public/",
-    "build:app": "browserify src/index.js -t babelify -t envify -t brfs -g unassertify -o public/index.js",
+    "build:app": "browserify src/index.js -t babelify -t -t localenvify -t brfs -g unassertify -o public/index.js",
     "build:lib": "browserify src/lib.js -o public/lib.js",
     "build": "npm run build:lib && npm run build:app",
-    "dev": "budo src/index.js:index.js --dir public -- -t babelify -t envify -t brfs"
+    "dev": "budo src/index.js:index.js --dir public -- -t babelify -t -t localenvify -t brfs"
   },
   "author": "",
   "license": "MIT",
@@ -17,7 +17,7 @@
     "brfs": "^1.4.3",
     "browserify": "^13.1.1",
     "budo": "^9.3.0",
-    "envify": "^4.0.0",
+    "localenvify": "^1.0.1",
     "phaser": "^2.6.2",
     "send-action": "^3.0.0",
     "uglify-js": "^2.7.5",

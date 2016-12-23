@@ -7,6 +7,9 @@ node_modules
 # Built files
 public/*.js
 
+# Environment
+.env.local
+
 # Logs
 logs
 *.log

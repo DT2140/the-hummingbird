@@ -1,4 +1,4 @@
-# Hummingbird
+# The Hummingbird
 
 > An interactive story about the life of a hummingbird controlled by speech
 
@@ -23,11 +23,7 @@ On first setup, always build before starting development server.
 ### Build
 
 ```bash
-# On UNIX/macOS
-$ STORY_LANG=en-US npm run build
-
-# On Windows
-$ set STORY_LANG=en-US&&npm run build
+$ npm run build
 ```
 
 ### Development
@@ -39,12 +35,10 @@ You can also jump to a specific page by calling `STORY.send('page', 3)` in the b
 To fire up the development server, run the following command
 
 ```bash
-# On UNIX/macOS
-$ STORY_LANG=en-US NODE_ENV=development npm run dev
-
-# On Windows
-$ set STORY_LANG=en-US&&set NODE_ENV=development&&npm run dev
+$ npm run dev
 ```
+
+All necessary environment variables are defined in [.env](.env) and can be overriden by adding the file `.env.local` to the project root or setting environment variables in any other way, i.e. `$ STORY_LANG=sv-SE npm run build`
 
 ### Serve production
 
