@@ -13,18 +13,12 @@ export default class MyPage extends Page {
 
   preload() {
     // Load sprites and such
-    this.game.load.image('background', '/assets/backgrounds/<BACKGORUND_IMAGE>.png');
+    this.loadBackground('<BACKGORUND_IMAGE>.png');
   }
 
   create() {
     // Call default create method (sets background color etc.)
     super.create();
-
-    // Add the sprite to the game (i.e. story)
-    const background = this.game.add.sprite(0, 0, 'background');
-
-    // Center image and stretch to fill but keepin porportions
-    this.fillCenter(background);
   }
 
   update() {
