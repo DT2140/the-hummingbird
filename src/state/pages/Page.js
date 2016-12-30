@@ -20,12 +20,12 @@ export default class Page extends Phaser.State {
   }
   
   loadMiddleground(middlegroundImage) {
-	  this.game.load.image('middleground', '/asset/middlegrounds/'+middlegroundImage);
+	  this.game.load.image('middleground', '/assets/middlegrounds/'+middlegroundImage);
 	  this.hasMiddleground = true;
   }
   
   loadForeground(foregroundImage) {
-	  this.game.load.image('foreground', '/asset/foregrounds/'+foregroundImage);
+	  this.game.load.image('foreground', '/assets/foregrounds/'+foregroundImage);
 	  this.hasForeground = true;
   }
   
