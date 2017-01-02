@@ -14,21 +14,6 @@ export default class Page extends Phaser.State {
     });
   }
 
-  loadBackground(backgroundImage) {
-	  this.game.load.image('background', '/assets/backgrounds/'+backgroundImage);
-	  this.hasBackgroud = true;
-  }
-  
-  loadMiddleground(middlegroundImage) {
-	  this.game.load.image('middleground', '/assets/middlegrounds/'+middlegroundImage);
-	  this.hasMiddleground = true;
-  }
-  
-  loadForeground(foregroundImage) {
-	  this.game.load.image('foreground', '/assets/foregrounds/'+foregroundImage);
-	  this.hasForeground = true;
-  }
-  
   fillCenter(sprite) {
     const { game } = this;
     const proportion = game.width / sprite.width;
@@ -39,20 +24,5 @@ export default class Page extends Phaser.State {
 
   create() {
     this.game.stage.backgroundColor = 0xffffff;
-	
-	if (this.hasBackgroud) {
-		this.background = this.game.add.sprite(0, 0, 'background');
-		this.fillCenter(this.background);
-	}
-	
-	if (this.hasMiddleground) {
-		this.middleground = this.game.add.sprite(0, 0, 'middleground');
-		this.fillCenter(this.middleground);
-	}
-	
-	if (this.hasForeground) {
-		this.foreground = this.game.add.sprite(0, 0, 'foreground');
-		this.fillCenter(this.foreground);
-	}
   }
 }

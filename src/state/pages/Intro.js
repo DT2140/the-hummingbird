@@ -1,44 +1,59 @@
 import Page from './Page';
 
 export default class Intro extends Page {
-  preload() {  
-	//set sprites
-    this.loadBackground('sky.png');
-	this.loadMiddleground('mountain-wide.png');
-	this.loadForeground('branch.png');
+  preload() {
+    this.game.load.spritesheet('bird', 'assets/characters/flapping.png', 135, 86, 4);
   }
-	
-  create () {
-	super.create();
-	
-	this.middleground.scale.setTo(1, 1);
-    const proportion = this.game.height / this.middleground.height;
-	 
-	this.middleground.scale.setTo(proportion, proportion);
-	
-	//offset position to get tween to end at right position
-	this.middleground.position.set(-200, 0);
-	this.foreground.position.set(-500, 0);
 
-	//check if tween is completed
-	this.isTweened = false;
-	
-	this.tweenImage(this.middleground, 0, 4000);
-	this.tweenImage(this.foreground, 0, 4000).onComplete.add(()=>{
-		this.isTweened = true;
-		
-		/*here we will:
-			1.fade in characters
-			2.activate the speech recognition
-		*/
-	});
+  create() {
+    super.create();
+
+    const { game } = this;
+
+    game.physics.arcade.gravity.y = 2600;
+
+    const ground = this.ground = game.add.sprite(0, game.height - game.height / 5, 'ground');
+
+    ground.width = game.width;
+    ground.height = 20;
+
+    game.add.image(0, 0, ground);
+    game.physics.enable(ground, Phaser.Physics.ARCADE);
+    ground.body.immovable = true;
+    ground.body.allowGravity = false;
+
+    const bird = this.bird = game.add.sprite(0, 0, 'bird');
+
+    bird.position.set((game.width / 2) - (bird.width / 2), game.height / 2 - bird.height);
+
+    game.physics.enable(bird, Phaser.Physics.ARCADE);
+    bird.body.collideWorldBounds = true;
+    bird.inputEnabled = true;
+
+    bird.animations.add('flap');
+    bird.frame = 1;
+    this.clicked = 0;
+    bird.events.onInputDown.add(event => {
+      this.clicked += 1;
+      clearTimeout(this.clicker);
+      if (this.clicked < 5) {
+        this.clicker = setTimeout(() => { this.clicked = 0; }, 500);
+      }
+    }, this);
   }
-  
-  //tween function
-  tweenImage(sprite, position, time) {
-    const tween = this.game.add.tween(sprite);
-	tween.to({x: position}, time, 'Linear', true, 0);
-	return tween;
+
+  update() {
+    const { game, bird, ground, clicked } = this;
+
+    if (clicked) {
+      if (bird.y > (game.height / 2)) {
+        bird.body.velocity.y = -150;
+      }
+      bird.animations.play('flap', 25, true);
+    } else {
+      bird.animations.stop();
+      bird.frame = 3;
+      game.physics.arcade.collide(bird, ground);
+    }
   }
 }
-
