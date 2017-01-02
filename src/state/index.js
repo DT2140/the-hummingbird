@@ -1,5 +1,8 @@
 import sendAction from 'send-action';
 import index from './pages';
+import { similarity } from '../utils';
+
+const PRECISION = process.env.STORY_RECOGNITION_PRECISION;
 
 const merge = (...args) => Object.assign({}, ...args);
 
@@ -18,7 +21,7 @@ export default function createState(story, script) {
     });
 
     // Create page instance and add its index for ease of access
-    const page = new Page(script.pages[index], subscribe);
+    const page = new Page(script.pages[index], pageSubscriber);
 
     // Add the page as a state to the story
     story.state.add(`page_${ index }`, page);
@@ -50,7 +53,7 @@ export default function createState(story, script) {
         // Store transcript and wether it is a complete match
         case 'transcript': return merge(state, {
           transcript: data,
-          isMatch: data.toLowerCase() === state.page.getLine().toLowerCase()
+          isMatch: similarity(data, state.page.getLine()) > PRECISION
         });
 
         case 'page': {
