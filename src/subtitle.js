@@ -1,60 +1,58 @@
+import { similarity } from './utils';
+
+const PRECISION = process.env.STORY_RECOGNITION_PRECISION;
+
 export default function subtitles(element) {
   let isInitialized = false;
   let ticker = false;
-  const nextTick = (line, transcript) => {
+
+  function nextTick(line, transcript) {
     if (!ticker) {
       requestAnimationFrame(() => {
         ticker = false;
 
         const words = line.split(' ');
         const results = transcript.toLowerCase().split(' ');
-        let text = ['<span class="Subtitle-match">'];
         let isMatch = true;
 
         /**
          * Run through all words in script and determine matches
          */
 
-        for (let i = 0; i < words.length; i += 1) {
-          const result = results[i];
-          const word = words[i];
+        Array.prototype.forEach.call(element.children, (child, index) => {
+          const script = words.slice(0, index + 1).join(' ');
+          const result = results.slice(0, index + 1).join(' ');
+          const match = similarity(script, result) > PRECISION;
 
-          /**
-           * End span of matches if there are no more words or matches
-           */
-
-          if (isMatch && (!result || result !== word.toLowerCase())) {
-            text.push('</span>');
+          if ((!isMatch || !result[index]) && !match) {
+            child.classList.remove('is-match');
             isMatch = false;
+          } else {
+            child.classList.add('is-match');
           }
-
-          text.push(word);
-        }
-
-        /**
-         * Make sure to close up that span if it was a complete match
-         */
-
-        if (isMatch) {
-          text.push('</span>');
-        }
-
-        /**
-         * Output script to DOM
-         */
-
-        element.innerHTML = text.join(' ');
+        });
       });
     }
 
     ticker = true;
-  };
+  }
+
+  function setText(text) {
+    const children = text.split(' ').map(word => {
+      return `<span class="Subtitle-word">${ word }</span>`;
+    });
+
+    element.innerHTML = children.join(' ');
+  }
 
   return (state, prev, send) => {
     if (state.transcript !== prev.transcript) {
-      nextTick(state.page.getLine(), state.transcript);
+      const script = state.page.getLine();
+
+      setText(script);
+      nextTick(script, state.transcript);
     } else if (!isInitialized) {
-      element.innerHTML = state.page.getLine();
+      setText(state.page.getLine());
       isInitialized = true;
     }
   };

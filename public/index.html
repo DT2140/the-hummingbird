@@ -102,8 +102,19 @@
       color: #b1b1b1;
     }
 
-    .Subtitle-match {
+    .Subtitle-word.is-match {
       color: #222;
+      animation-name: Subtitle-word--pop;
+      animation-fill-mode: forwards;
+      animation-iteration-count: 1;
+      animation-duration: 125ms;
+      animation-timing-function: cubic-bezier(0.15, 0.95, 0.64, 1.21);
+    }
+
+    @keyframes Subtitle-word--pop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
     }
   </style>
 </head>
