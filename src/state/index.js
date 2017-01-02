@@ -2,7 +2,7 @@ import sendAction from 'send-action';
 import index from './pages';
 import { similarity } from '../utils';
 
-const PRECISION = process.env.STORY_RECOGNITION_PRECISION;
+const PRECISION = parseFloat(process.env.STORY_RECOGNITION_PRECISION);
 
 const merge = (...args) => Object.assign({}, ...args);
 

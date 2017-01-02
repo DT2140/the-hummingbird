@@ -9,7 +9,6 @@ export default class Page extends Phaser.State {
     subscribe((state, prev, send) => {
       if (state.isMatch && (script.lines.length > currentLine + 1)) {
         currentLine += 1;
-        send('transcript', '');
       }
     });
   }
