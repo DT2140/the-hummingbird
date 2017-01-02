@@ -1,6 +1,6 @@
 import { similarity } from './utils';
 
-const PRECISION = process.env.STORY_RECOGNITION_PRECISION;
+const PRECISION = parseFloat(process.env.STORY_RECOGNITION_PRECISION);
 
 export default function subtitles(element) {
   let isInitialized = false;
@@ -12,7 +12,7 @@ export default function subtitles(element) {
         ticker = false;
 
         const words = line.split(' ');
-        const results = transcript.toLowerCase().split(' ');
+        const results = transcript.split(' ');
         let isMatch = true;
 
         /**
@@ -24,7 +24,7 @@ export default function subtitles(element) {
           const result = results.slice(0, index + 1).join(' ');
           const match = similarity(script, result) > PRECISION;
 
-          if ((!isMatch || !result[index]) && !match) {
+          if (!isMatch || (!results[index] || !match)) {
             child.classList.remove('is-match');
             isMatch = false;
           } else {
@@ -46,10 +46,17 @@ export default function subtitles(element) {
   }
 
   return (state, prev, send) => {
-    if (state.transcript !== prev.transcript) {
-      const script = state.page.getLine();
+    const script = state.page.getLine();
 
+    if (prev.page.getLine() !== script) {
       setText(script);
+    } else if (!state.isSpeaking && !state.isMatch) {
+      for (let child of element.children) {
+        child.classList.remove('is-match');
+      }
+    }
+
+    if (state.transcript !== prev.transcript) {
       nextTick(script, state.transcript);
     } else if (!isInitialized) {
       setText(state.page.getLine());

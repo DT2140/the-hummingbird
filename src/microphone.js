@@ -4,9 +4,10 @@ const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammar
 const ENV = process.env.NODE_ENV;
 
 export default function microphone(button, lang) {
-  let line, timeout, sendMatch;
+  let line, timeout, sendMatch, sendNext;
   let isTicking = false;
   let isInitialized = false;
+  let isPressed = false;
 
   /**
    * Check that speech recognition is supported
@@ -26,12 +27,17 @@ export default function microphone(button, lang) {
   return (state, prev, send) => {
     const { isSpeaking, isMatch, page, index } = state;
     const nextLine = page.getLine();
+    let isActive = false;
 
     /**
      * Redefine on every state change so as to always use latest state
      */
 
     sendMatch = () => send('transcript', nextLine);
+    sendNext = () => {
+      const said = state.transcript.split(' ').filter(Boolean).length;
+      send('transcript', nextLine.split(' ').slice(0, said + 1).join(' '));
+    };
 
     /**
      * Start a ticker when transcript matches script
@@ -87,7 +93,6 @@ export default function microphone(button, lang) {
 
       const onStart = () => send('speaking', true);
       const onEnd = () => send('speaking', false);
-      let isPressed = false;
 
       /**
        * Hook up event listeners to handle speaking
@@ -96,12 +101,16 @@ export default function microphone(button, lang) {
       button.addEventListener('mousedown', onStart);
       button.addEventListener('touchstart', onStart);
       window.addEventListener('keydown', event => {
-        if (!isPressed && event.which === 32) {
+        if (isPressed) {
+          if (event.which === 88 && ENV === 'development') {
+            sendMatch();
+          } else if (event.which === 90 && ENV === 'development') {
+            sendNext();
+          }
+        } else if (event.which === 32) {
           onStart();
           isPressed = true;
           event.preventDefault();
-        } else if (event.which === 88 && ENV === 'development') {
-          sendMatch();
         }
       });
 
@@ -131,7 +140,6 @@ export default function microphone(button, lang) {
 
         onstart() {
           final = '';
-          send('speaking', true);
         },
 
         /**
@@ -153,7 +161,9 @@ export default function microphone(button, lang) {
             }
           }
 
-          send('transcript', interim);
+          if (interim) {
+            send('transcript', interim);
+          }
         },
 
         /**
@@ -161,6 +171,7 @@ export default function microphone(button, lang) {
          */
 
         onerror(event) {
+          send('speaking', false);
           throw event.error;
         },
 
@@ -169,7 +180,6 @@ export default function microphone(button, lang) {
          */
 
         onend() {
-          send('speaking', false);
           send('transcript', final);
         }
       });
