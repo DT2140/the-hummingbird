@@ -4,8 +4,9 @@ export default class OnceUpon extends Page {
   preload() {
     //set sprites
     this.loadBackground('sky2.png');
-    this.loadMiddleground('mountain-wide.png');
+    this.loadMiddleground('mountains.png');
     this.loadForeground('tree.png');
+    //TODO add lake
   }
 
   create() {
@@ -13,9 +14,10 @@ export default class OnceUpon extends Page {
 
 	
     this.middleground.scale.setTo(1, 1);
-    const proportion = this.game.height / this.middleground.height;
+    this.middleground.x -=  (this.middleground.width - this.game.width ) / 2;
+    //const proportion = this.game.height / this.middleground.height;
 
-    this.middleground.scale.setTo(proportion, proportion);
+    //this.middleground.scale.setTo(proportion, proportion);
 
     this.isTweened = false;
 
