@@ -11,6 +11,7 @@ export default class OnceUpon extends Page {
   create() {
     super.create();
 
+	
     this.middleground.scale.setTo(1, 1);
     const proportion = this.game.height / this.middleground.height;
 
@@ -18,20 +19,22 @@ export default class OnceUpon extends Page {
 
     this.isTweened = false;
 
-
+    this.foreground.position.set(0, -this.foreground.height);
+	
     // the lake falls into place when the mountain
-
-    this.tweenImage(this.foreground, -500, 2000).onComplete.add(() => {
+    this.queue('showTree', done => {
+			
+    this.tweenImage(this.foreground, 0, 2000).onComplete.add(() => {
       this.isTweened = true;
+      done();
+      });
+	})
 
-      // tween completed, do what needs to be done after.
-
-    });
   }
-    //tween function
+//tween function
   tweenImage(sprite, position, time) {
     const tween = this.game.add.tween(sprite);
-    tween.from({ y: position }, time, Phaser.Easing.Bounce.Out, true, 0);
-    return tween;
+	tween.to({y: position}, time, Phaser.Easing.Bounce.Out, true, 0);
+	return tween;
   }
 }

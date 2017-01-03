@@ -34,10 +34,10 @@ export default class Page extends Phaser.State {
       // Handle page queues
       if (script.queues) {
         for (let queue of script.queues) {
-          const { word } = queue;
+          const { word, action } = queue;
 
           // Trigger queues that have not been previously triggered
-          if (!triggered.includes(word) && transcript.match(word)) {
+          if (!triggered.includes(action) && transcript.match(word)) {
             // Bundle queues using `running` promise
             running = running.then(() => this.trigger(queue.action));
 

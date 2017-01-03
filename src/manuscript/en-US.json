@@ -2,12 +2,11 @@
   "lang": "en-US",
   "pages": [{
     "lines": [
-      "Once upon a time there was a lake. And in the lake there was a tree."
+      "Once upon a time there was a lake and in the lake there was a tree."
     ],
     "queues": [{
       "word": "tree",
-      "actor": "tree",
-      "action": "appear"
+      "action": "showTree"
     }]
   }, {
     "lines": [
@@ -15,7 +14,6 @@
     ],
     "queues": [{
       "word": "hummingbird",
-      "actor": "hummingbird",
       "action": "appear"
     }]
   }, {
@@ -24,7 +22,6 @@
     ],
     "queues": [{
       "word": "mother",
-      "actor": "mother",
       "action": "angry"
     }]
   }]
