@@ -43,3 +43,7 @@ All necessary environment variables are defined in [.env](.env) and can be overr
 ### Serve production
 
 TODO: Add static server for production
+
+## Credits
+
+Icons made by [Dave Gandy](http://www.flaticon.com/authors/dave-gandy) from [www.flaticon.com](http://www.flaticon.com) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/).

@@ -33,14 +33,16 @@ export default function microphone(button, lang) {
      * Redefine on every state change so as to always use latest state
      */
 
-    sendMatch = () => send('transcript', nextLine);
+    sendMatch = () => send('transcript', {
+      isFinal: true,
+      transcript: nextLine
+    });
     sendNext = () => {
-      const words = nextLine.split(' ');
       const said = state.transcript.split(' ').filter(Boolean).length;
 
       send('transcript', {
-        isFinal: (said + 1) === words.length,
-        transcript: words.slice(0, said + 1).join(' ')
+        isFinal: true,
+        transcript: nextLine.split(' ').slice(0, said + 1).join(' ')
       });
     };
 
