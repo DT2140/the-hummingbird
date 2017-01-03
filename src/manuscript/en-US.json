@@ -2,39 +2,30 @@
   "lang": "en-US",
   "pages": [{
     "lines": [
-      "Once upon a time there was a mountain. And by the mountain there was a lake."
+      "Once upon a time there was a lake. And in the lake there was a tree."
     ],
     "queues": [{
-      "word": "mountain",
-      "actor": "mountain",
-      "action": "appear"
-    }]
-  }, {
-	"lines": [
-      "In the lake there was a tree. And in the tree there lived a hummingbird."
-    ],
-    "queues": [{
-      "word": "lake",
-      "actor": "lake",
+      "word": "tree",
+      "actor": "tree",
       "action": "appear"
     }]
   }, {
     "lines": [
-      "In the tree there lived a hummingbird"
+      "In the tree there lived a hummingbird. And the hummingbird wanted to fly."
     ],
     "queues": [{
       "word": "hummingbird",
-      "actor": "bird",
+      "actor": "hummingbird",
       "action": "appear"
     }]
   }, {
     "lines": [
-      "The humingbird was very scared to be alone on the ground"
+      "But the hummingbird's mother said 'no, you are too young to fly!'."
     ],
     "queues": [{
-      "word": "scared",
-      "actor": "bird",
-      "action": "cry"
+      "word": "mother",
+      "actor": "mother",
+      "action": "angry"
     }]
   }]
 }
