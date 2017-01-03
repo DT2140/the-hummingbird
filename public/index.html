@@ -106,8 +106,7 @@
       padding: 0.5em 1em;
       font-size: 24px;
       font-family: "Leckerli One", cursive, sans-serif;
-      color: #a0a0a0;
-      text-shadow: 1px 1px 1px #fff;
+      text-shadow: 1px 1px 0 #fff;
       word-spacing: 0.3em;
       -webkit-font-smoothing: antialiased;
     }
@@ -127,6 +126,8 @@
     .Subtitle-word {
       display: inline-block;
       position: relative;
+      color: #a0a0a0;
+      transition: color 200ms ease-out;
     }
 
     .Subtitle-word.is-loading {
@@ -142,6 +143,10 @@
       animation-fill-mode: forwards;
       animation-duration: 200ms;
       animation-timing-function: ease-out;
+    }
+
+    .Subtitle-word.is-keyword {
+      color: #5dda6b;
     }
   </style>
 </head>

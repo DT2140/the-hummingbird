@@ -9,7 +9,7 @@ export default function subtitles(element) {
   let chokedOn = 0;
   let isInitialized = false;
 
-  function nextTick(line, transcript, send) {
+  function nextTick(line, transcript, keywords, send) {
     if (!ticker) {
       requestAnimationFrame(() => {
         ticker = false;
@@ -38,6 +38,10 @@ export default function subtitles(element) {
 
           children[i].classList.remove('is-loading');
           children[i].classList.toggle('is-match', isMatch);
+
+          if (keywords.includes(words[i])) {
+            children[i].classList.add('is-keyword');
+          }
         }
 
         if (chokedOn > stoppedOn) {
@@ -82,7 +86,7 @@ export default function subtitles(element) {
     }
 
     if (state.transcript !== prev.transcript) {
-      nextTick(script, state.transcript, send);
+      nextTick(script, state.transcript, state.keywords, send);
     } else if (!isInitialized) {
       setText(state.page.getLine());
       isInitialized = true;
