@@ -27,6 +27,10 @@ export default class TryFly extends Page {
 		done();
 	  });
     });
+	
+	this.queue('hummingbirdFly', done => {
+      // add video here
+    });
   }
 //tween function
   tweenImage(sprite, alpha, time) {
