@@ -24,7 +24,7 @@ export default class Page extends Phaser.State {
     };
 
     subscribe((state, prev, send) => {
-      const { isMatch, transcript } = state;
+      const { isMatch, transcript, page, choke } = state;
 
       // Progress through lines if there are more than one line
       if (isMatch && (script.lines.length > currentLine + 1)) {
@@ -35,9 +35,10 @@ export default class Page extends Phaser.State {
       if (script.queues) {
         for (let queue of script.queues) {
           const { word, action } = queue;
+          const match = page.getLine().split(' ').slice(0, choke);
 
           // Trigger queues that have not been previously triggered
-          if (!triggered.includes(action) && transcript.match(word)) {
+          if (!triggered.includes(action) && match.includes(word)) {
             // Bundle queues using `running` promise
             running = running.then(() => this.trigger(queue.action));
 

@@ -56,7 +56,10 @@ export default function createState(story, script) {
           transcript: data.transcript
         });
 
-        case 'match': return merge(state, { isMatch: true });
+        case 'choke': return merge(state, {
+          choke: data,
+          isMatch: data >= state.page.getLine().split(' ').length,
+        });
 
         case 'keyword': return merge(state, {
           keywords: [ data, ...state.keywords ]
@@ -78,7 +81,10 @@ export default function createState(story, script) {
         }
 
         // Relay that user is speaking to state
-        case 'speaking': return merge(state, { isSpeaking: data });
+        case 'speaking': return merge(state, {
+          isSpeaking: data,
+          transcript: ''
+        });
 
         // Just return prevous state for unrecognized actions
         default: return state;
@@ -113,6 +119,7 @@ export default function createState(story, script) {
       isSpeaking: false,
       isLoading: false,
       keywords: [],
+      choke: 0,
       index: 0,
       page: pages[0]
     }

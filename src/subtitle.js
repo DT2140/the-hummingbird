@@ -38,10 +38,6 @@ export default function subtitles(element) {
 
           children[i].classList.remove('is-loading');
           children[i].classList.toggle('is-match', isMatch);
-
-          if (keywords.includes(words[i])) {
-            children[i].classList.add('is-keyword');
-          }
         }
 
         if (chokedOn > stoppedOn) {
@@ -50,11 +46,11 @@ export default function subtitles(element) {
           spawnParticles(left + width / 2, top + 10);
         }
 
-        if (isMatch) {
-          send('match', true);
-        } else {
+        if (!isMatch) {
           children[chokedOn].classList.add('is-loading');
         }
+
+        send('choke', chokedOn);
       });
     }
 
@@ -82,6 +78,13 @@ export default function subtitles(element) {
 
       for (let child of element.children) {
         child.classList.remove('is-loading');
+      }
+    }
+
+    const words = script.split(' ');
+    for (let i = 0; i < words.length; i += 1) {
+      if (state.keywords.includes(words[i])) {
+        element.children[i].classList.add('is-keyword');
       }
     }
 

@@ -25,7 +25,7 @@ export default function microphone(button, lang) {
   const recognition = new SpeechRecognition();
 
   return (state, prev, send) => {
-    const { isSpeaking, isMatch, page, index } = state;
+    const { isSpeaking, isMatch, page, index, choke, transcript } = state;
     const nextLine = page.getLine();
     let isActive = false;
 
@@ -38,11 +38,11 @@ export default function microphone(button, lang) {
       transcript: nextLine
     });
     sendNext = () => {
-      const said = state.transcript.split(' ').filter(Boolean).length;
+      const nextWord = nextLine.split(' ').slice(choke, choke + 1);
 
       send('transcript', {
         isFinal: true,
-        transcript: nextLine.split(' ').slice(0, said + 1).join(' ')
+        transcript: `${ transcript } ${ nextWord }`.trim()
       });
     };
 
