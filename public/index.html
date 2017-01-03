@@ -42,6 +42,12 @@
       fill: gray;
     }
 
+    .Microphone.is-pressed .Microphone-center {
+      stroke: red;
+      stroke-width: 3px;
+      fill: pink;
+    }
+
     .Microphone.is-active .Microphone-center {
       fill: red;
     }
@@ -112,8 +118,22 @@
       100% { transform: scale(1.15); }
     }
 
+    @keyframes Subtitle-word--pulsate {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
     .Subtitle-word {
       display: inline-block;
+      position: relative;
+    }
+
+    .Subtitle-word.is-loading {
+      animation-name: Subtitle-word--pulsate;
+      animation-iteration-count: infinite;
+      animation-duration: 1250ms;
+      animation-timing-function: linear;
     }
 
     .Subtitle-word.is-match {

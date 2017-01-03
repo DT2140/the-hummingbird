@@ -1,36 +1,56 @@
-import { similarity } from './utils';
+import similarity from './utils/similarity';
+import spawnParticles from './utils/particles';
 
 const PRECISION = parseFloat(process.env.STORY_RECOGNITION_PRECISION);
 
 export default function subtitles(element) {
-  let isInitialized = false;
   let ticker = false;
+  let stoppedOn = 0;
+  let chokedOn = 0;
+  let isInitialized = false;
 
-  function nextTick(line, transcript) {
+  function nextTick(line, transcript, send) {
     if (!ticker) {
       requestAnimationFrame(() => {
         ticker = false;
 
+        const children = element.children;
         const words = line.split(' ');
         const results = transcript.split(' ');
+
         let isMatch = true;
+
+        chokedOn = words.length;
 
         /**
          * Run through all words in script and determine matches
          */
 
-        Array.prototype.forEach.call(element.children, (child, index) => {
-          const script = words.slice(0, index + 1).join(' ');
-          const result = results.slice(0, index + 1).join(' ');
-          const match = similarity(script, result) > PRECISION;
+        for (var i = stoppedOn; i < words.length; i += 1) {
+          const script = words.slice(stoppedOn, i + 1).join(' ');
+          const result = results.slice(0, i - stoppedOn + 1).join(' ');
+          const match = similarity(script, result);
 
-          if (!isMatch || (!results[index] || !match)) {
-            child.classList.remove('is-match');
+          if (isMatch && (!results[i - stoppedOn] || match < PRECISION)) {
+            chokedOn = i;
             isMatch = false;
-          } else {
-            child.classList.add('is-match');
           }
-        });
+
+          children[i].classList.remove('is-loading');
+          children[i].classList.toggle('is-match', isMatch);
+        }
+
+        if (chokedOn > stoppedOn) {
+          const lastMatch = children[chokedOn - 1];
+          const { left, top, width } = lastMatch.getBoundingClientRect();
+          spawnParticles(left + width / 2, top + 10);
+        }
+
+        if (isMatch) {
+          send('match', true);
+        } else {
+          children[chokedOn].classList.add('is-loading');
+        }
       });
     }
 
@@ -50,14 +70,19 @@ export default function subtitles(element) {
 
     if (prev.page.getLine() !== script) {
       setText(script);
-    } else if (!state.isSpeaking && !state.isMatch) {
+      stoppedOn = 0;
+    }
+
+    if (!state.isSpeaking && !state.isLoading) {
+      stoppedOn = chokedOn;
+
       for (let child of element.children) {
-        child.classList.remove('is-match');
+        child.classList.remove('is-loading');
       }
     }
 
     if (state.transcript !== prev.transcript) {
-      nextTick(script, state.transcript);
+      nextTick(script, state.transcript, send);
     } else if (!isInitialized) {
       setText(state.page.getLine());
       isInitialized = true;
