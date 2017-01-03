@@ -1,6 +1,6 @@
 import sendAction from 'send-action';
 import index from './pages';
-import { similarity } from '../utils';
+import similarity from '../utils/similarity';
 
 const PRECISION = parseFloat(process.env.STORY_RECOGNITION_PRECISION);
 
@@ -52,9 +52,11 @@ export default function createState(story, script) {
       switch (action) {
         // Store transcript and wether it is a complete match
         case 'transcript': return merge(state, {
-          transcript: data,
-          isMatch: similarity(data, state.page.getLine()) > PRECISION
+          isLoading: !data.isFinal,
+          transcript: data.transcript
         });
+
+        case 'match': return merge(state, { isMatch: true });
 
         case 'page': {
           // Set page state in story
@@ -64,6 +66,7 @@ export default function createState(story, script) {
           return merge(state, {
             transcript: '',
             isMatch: false,
+            isLoading: false,
             index: data,
             page: pages[data]
           });
@@ -103,6 +106,7 @@ export default function createState(story, script) {
       transcript: '',
       isMatch: false,
       isSpeaking: false,
+      isLoading: false,
       index: 0,
       page: pages[0]
     }

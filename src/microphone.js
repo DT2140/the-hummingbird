@@ -162,7 +162,7 @@ export default function microphone(button, lang) {
           }
 
           if (interim) {
-            send('transcript', interim);
+            send('transcript', { transcript: interim, isFinal: false });
           }
         },
 
@@ -180,7 +180,7 @@ export default function microphone(button, lang) {
          */
 
         onend() {
-          send('transcript', final);
+          send('transcript', { transcript: final, isFinal: true });
         }
       });
     }

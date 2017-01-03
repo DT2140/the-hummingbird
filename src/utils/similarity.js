@@ -1,4 +1,4 @@
-export function similarity(s1, s2) {
+export default function similarity(s1, s2) {
   let longer = s1;
   let shorter = s2;
 
