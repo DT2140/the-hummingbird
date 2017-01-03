@@ -15,7 +15,11 @@
     "queues": [{
       "word": "hummingbird",
       "action": "fadeInHummingbird"
-    }]
+    },
+	{
+      "word": "fly",
+      "action": "hummingbirdFly"
+	}]
   }, {
     "lines": [
       "But the hummingbird's mother said 'no, you are too young to fly!'."
