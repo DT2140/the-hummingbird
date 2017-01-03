@@ -35,8 +35,13 @@ export default function microphone(button, lang) {
 
     sendMatch = () => send('transcript', nextLine);
     sendNext = () => {
+      const words = nextLine.split(' ');
       const said = state.transcript.split(' ').filter(Boolean).length;
-      send('transcript', nextLine.split(' ').slice(0, said + 1).join(' '));
+
+      send('transcript', {
+        isFinal: (said + 1) === words.length,
+        transcript: words.slice(0, said + 1).join(' ')
+      });
     };
 
     /**

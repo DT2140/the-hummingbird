@@ -3,12 +3,48 @@ export default class Page extends Phaser.State {
     super();
 
     let currentLine = 0;
+    let running = Promise.resolve();
+    const triggered = [];
+    const actions = [];
 
+    // Get current line from script
     this.getLine = () => script.lines[currentLine];
 
+    // Queue up an action
+    this.queue = (name, fn) => { actions[name] = fn; };
+
+    // Trigger action by name
+    this.trigger = action => {
+      if (!triggered.includes(action)) {
+        triggered.push(action);
+      }
+
+      // Wrap action in promise to prevent chaos
+      return new Promise(resolve => actions[action](resolve));
+    };
+
     subscribe((state, prev, send) => {
-      if (state.isMatch && (script.lines.length > currentLine + 1)) {
+      const { isMatch, transcript } = state;
+
+      // Progress through lines if there are more than one line
+      if (isMatch && (script.lines.length > currentLine + 1)) {
         currentLine += 1;
+      }
+
+      // Handle page queues
+      if (script.queues) {
+        for (let queue of script.queues) {
+          const { word } = queue;
+
+          // Trigger queues that have not been previously triggered
+          if (!triggered.includes(word) && transcript.match(word)) {
+            // Bundle queues using `running` promise
+            running = running.then(() => this.trigger(queue.action));
+
+            // Notify application of keyword
+            send('keyword', word);
+          }
+        }
       }
     });
   }
@@ -29,9 +65,7 @@ export default class Page extends Phaser.State {
   }
 
   fillCenter(sprite) {
-    const {
-      game
-    } = this;
+    const { game } = this;
     const proportion = game.width / sprite.width;
 
     sprite.scale.setTo(proportion, proportion);

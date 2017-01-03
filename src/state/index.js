@@ -58,6 +58,10 @@ export default function createState(story, script) {
 
         case 'match': return merge(state, { isMatch: true });
 
+        case 'keyword': return merge(state, {
+          keywords: [ data, ...state.keywords ]
+        });
+
         case 'page': {
           // Set page state in story
           story.state.start(`page_${ data }`);
@@ -67,6 +71,7 @@ export default function createState(story, script) {
             transcript: '',
             isMatch: false,
             isLoading: false,
+            keywords: [],
             index: data,
             page: pages[data]
           });
@@ -107,6 +112,7 @@ export default function createState(story, script) {
       isMatch: false,
       isSpeaking: false,
       isLoading: false,
+      keywords: [],
       index: 0,
       page: pages[0]
     }
