@@ -4,8 +4,9 @@ export default class OnceUpon extends Page {
   preload() {
     //set sprites
     this.loadBackground('sky2.png');
-    this.loadMiddleground('mountain-wide.png');
+    this.loadMiddleground('mountains.png');
     this.loadForeground('tree.png');
+    //TODO add lake
   }
 
   create() {
@@ -13,20 +14,19 @@ export default class OnceUpon extends Page {
 
 	
     this.middleground.scale.setTo(1, 1);
-    const proportion = this.game.height / this.middleground.height;
+    this.middleground.x -=  (this.middleground.width - this.game.width ) / 2;
+    //const proportion = this.game.height / this.middleground.height;
 
-    this.middleground.scale.setTo(proportion, proportion);
+    //this.middleground.scale.setTo(proportion, proportion);
 
     this.isTweened = false;
 
     this.foreground.position.set(0, -this.foreground.height);
 	
-    // the lake falls into place when the mountain
     this.queue('showTree', done => {
-			
-    this.tweenImage(this.foreground, 0, 2000).onComplete.add(() => {
-      this.isTweened = true;
-      done();
+      this.tweenImage(this.foreground, 0, 2000).onComplete.add(() => {
+        this.isTweened = true;
+        done();
       });
 	})
 

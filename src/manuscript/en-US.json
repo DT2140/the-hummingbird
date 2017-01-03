@@ -2,7 +2,7 @@
   "lang": "en-US",
   "pages": [{
     "lines": [
-      "Once upon a time there was a lake and in the lake there was a tree"
+      "Once upon a time there was a lake and in the lake there was a tree."
     ],
     "queues": [{
       "word": "tree",
@@ -10,15 +10,19 @@
     }]
   }, {
     "lines": [
-      "In the tree there lived a hummingbird and the hummingbird wanted to fly"
+      "In the tree there lived a hummingbird that wanted to fly."
     ],
     "queues": [{
       "word": "hummingbird",
-      "action": "appear"
-    }]
+      "action": "fadeInHummingbird"
+    },
+	{
+      "word": "fly",
+      "action": "hummingbirdFly"
+	}]
   }, {
     "lines": [
-      "But the hummingbird's mother said that he is too young to fly"
+      "But the hummingbird's mother said 'no, you are too young to fly!'."
     ],
     "queues": [{
       "word": "mother",

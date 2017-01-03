@@ -88,7 +88,7 @@ export default class Page extends Phaser.State {
 
     if (this.hasForeground) {
       this.foreground = this.game.add.sprite(0, 0, 'foreground');
-      this.fillCenter(this.foreground);
+      //this.fillCenter(this.foreground);
     }
   }
 }
