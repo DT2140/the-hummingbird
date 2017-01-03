@@ -5,26 +5,25 @@ preload() {
 	//set sprites
     this.loadBackground('sky.png');
 	this.loadMiddleground('mountain-wide.png');
-	this.loadForeground('branch.png');
+	this.loadForeground('branch.png'); //this should be the lake.
   }
 	
   create () {
 	super.create();
 	
+	this.foreground.alpha = 1;
 	this.middleground.scale.setTo(1, 1);
     const proportion = this.game.height / this.middleground.height;
 	 
 	this.middleground.scale.setTo(proportion, proportion);
-	
-	//offset position to get tween to end at right position
-	this.middleground.position.set(-200, 0);
-	this.foreground.position.set(-500, 0);
 
 	//check if tween is completed
 	this.isTweened = false;
 	
-	this.tweenImage(this.middleground, 0, 4000);
-	this.tweenImage(this.foreground, 0, 4000).onComplete.add(()=>{
+	
+	// the lake falls into place when the mountain
+	
+	this.tweenImageAlpha(this.foreground, -500, 2000).onComplete.add(()=>{
 		this.isTweened = true;
 		
 		/*here we will:
@@ -35,9 +34,16 @@ preload() {
   }
   
   //tween function
-  tweenImage(sprite, position, time) {
+  tweenImageAlpha(sprite, position, time) {
     const tween = this.game.add.tween(sprite);
-	tween.to({x: position}, time, 'Linear', true, 0);
+	tween.from({alpha: 0}, time, Phaser.Easing.Bounce.Out, true, 0);
+	
+	return tween;
+  }
+    tweenImagePosition(sprite, position, time) {
+    const tween = this.game.add.tween(sprite);
+	tween.from({Y: position}, time, Phaser.Easing.Bounce.Out, true, 0);
+	
 	return tween;
   }
 }

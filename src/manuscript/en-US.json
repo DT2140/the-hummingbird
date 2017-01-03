@@ -2,30 +2,30 @@
   "lang": "en-US",
   "pages": [{
     "lines": [
-      "Once upon a time there was a hummingbird"
+      "Once upon a time there was a mountain. And by the mountain there was a lake."
+    ],
+    "queues": [{
+      "word": "mountain",
+      "actor": "mountain",
+      "action": "appear"
+    }]
+  }, {
+	"lines": [
+      "In the lake there was a tree. And in the tree there lived a hummingbird."
+    ],
+    "queues": [{
+      "word": "lake",
+      "actor": "lake",
+      "action": "appear"
+    }]
+  }, {
+    "lines": [
+      "In the tree there lived a hummingbird"
     ],
     "queues": [{
       "word": "hummingbird",
       "actor": "bird",
-      "action": "lookAround"
-    }]
-  }, {
-    "lines": [
-      "The hummingbird made a great leap"
-    ],
-    "queues": [{
-      "word": "great",
-      "actor": "bird",
-      "action": "flapWings"
-    }]
-  }, {
-    "lines": [
-      "But the hummingbird was caught by the wind"
-    ],
-    "queues": [{
-      "word": "caught",
-      "actor": "bird",
-      "action": "dazed"
+      "action": "appear"
     }]
   }, {
     "lines": [
