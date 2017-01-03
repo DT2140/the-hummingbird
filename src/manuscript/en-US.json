@@ -13,10 +13,6 @@
       "In the tree there lived a hummingbird that wanted to fly."
     ],
     "queues": [{
-      "word": "hummingbird",
-      "action": "fadeInHummingbird"
-    },
-	{
       "word": "fly",
       "action": "hummingbirdFly"
 	}]
