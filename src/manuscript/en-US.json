@@ -10,11 +10,11 @@
     }]
   }, {
     "lines": [
-      "In the tree there lived a hummingbird. And the hummingbird wanted to fly."
+      "In the tree there lived a hummingbird and the hummingbird wanted to fly."
     ],
     "queues": [{
       "word": "hummingbird",
-      "action": "appear"
+      "action": "fadeInHummingbird"
     }]
   }, {
     "lines": [

@@ -21,12 +21,10 @@ export default class OnceUpon extends Page {
 
     this.foreground.position.set(0, -this.foreground.height);
 	
-    // the lake falls into place when the mountain
     this.queue('showTree', done => {
-			
-    this.tweenImage(this.foreground, 0, 2000).onComplete.add(() => {
-      this.isTweened = true;
-      done();
+      this.tweenImage(this.foreground, 0, 2000).onComplete.add(() => {
+        this.isTweened = true;
+        done();
       });
 	})
 
