@@ -32,6 +32,7 @@ export default class Sad extends Page {
     this.queue('angryMother', done => {
 	  sad.play(true);
       angry.play(true).onComplete.add(done);
+      done();
     })
   }
 }
