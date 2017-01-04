@@ -1,6 +1,6 @@
 const PRECISION = parseFloat(process.env.STORY_RECOGNITION_PRECISION);
 const MAX_PARTICLES = 500;
-const PARTICLE_NUM_RANGE = () => 5 + Math.round(Math.random() * 5);
+const PARTICLE_NUM_RANGE = () => 15 + Math.round(Math.random() * 15);
 const PARTICLE_GRAVITY = 0.075;
 const PARTICLE_ALPHA_FADEOUT = 0.96;
 const PARTICLE_VELOCITY_RANGE = {
@@ -41,7 +41,7 @@ requestAnimationFrame(function drawParticles() {
     particle.alpha *= PARTICLE_ALPHA_FADEOUT;
 
     context.fillStyle = `rgba(${particle.color.join(',')}, ${particle.alpha})`;
-    context.fillRect(Math.round(particle.x - 1), Math.round(particle.y - 1), 3, 3);
+    context.fillRect(Math.round(particle.x - 1), Math.round(particle.y - 1), 5, 5);
   });
 
   particles = particles
