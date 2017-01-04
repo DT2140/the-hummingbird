@@ -56,10 +56,10 @@ export default function microphone(button, lang) {
       isTicking = true;
       page.next(() => {
         if (isTicking) {
-          button.classList.add('is-ticking');
+          button.classList.add('is-ticking', 'is-done');
+          send('isSpeaking', false);
           timeout = setTimeout(() => {
             recognition.abort();
-            send('isSpeaking', false);
             send('page', index + 1);
           }, 3800);
         }
@@ -85,16 +85,17 @@ export default function microphone(button, lang) {
       grammars.addFromString(`#JSGF V1.0; grammar line; public <line> = ${ nextLine.toLowerCase() } ;`, 1);
       recognition.grammars = grammars;
       line = nextLine;
+      button.classList.remove('is-done');
     }
 
     /**
      * Handle when the user starts speaking
      */
 
+    button.classList.toggle('is-active', isSpeaking && !isMatch);
     if (isSpeaking !== prev.isSpeaking) {
-      button.classList.toggle('is-active', isSpeaking);
 
-      if (isSpeaking) {
+      if (isSpeaking && !isMatch) {
         recognition.start();
       } else {
         recognition.stop();
@@ -121,8 +122,8 @@ export default function microphone(button, lang) {
        * Hook up event listeners to handle speaking
        */
 
-      button.addEventListener('mousedown', onStart);
-      button.addEventListener('touchstart', onStart);
+      button.addEventListener('mousedown', () => onStart());
+      button.addEventListener('touchstart', () => onStart());
       window.addEventListener('keydown', event => {
         if (isPressed) {
           if (event.which === 88 && ENV === 'development') {
@@ -137,8 +138,8 @@ export default function microphone(button, lang) {
         }
       });
 
-      button.addEventListener('mouseup', onEnd);
-      button.addEventListener('touchend', onEnd);
+      button.addEventListener('mouseup', () => onEnd());
+      button.addEventListener('touchend', () => onEnd());
       window.addEventListener('keyup', event => {
         if (event.which === 32) {
           onEnd();
@@ -203,6 +204,7 @@ export default function microphone(button, lang) {
          */
 
         onend() {
+          if (isTicking) { return; }
           send('transcript', { transcript: final, isFinal: true });
         }
       });

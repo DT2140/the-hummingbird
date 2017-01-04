@@ -23,7 +23,8 @@ export default class TryFly extends Page {
     hummingbird.addToWorld(this.foreground.width/3, this.foreground.height/2, 0.5, 0.5, 0.25, 0.25);
 
     this.queue('hummingbirdFly', done => {
-      hummingbird.play(true).onComplete.add(done);
+      hummingbird.play(true);
+      setTimeout(done, hummingbird.duration * 1000);
     });
   }
 }
