@@ -7,6 +7,9 @@ export default class Page extends Phaser.State {
     const triggered = [];
     const actions = [];
 
+    // Utility function for queueing actions tied to page
+    this.next = fn => { running = running.then(fn); };
+
     // Get current line from script
     this.getLine = () => script.lines[currentLine];
 
@@ -35,12 +38,12 @@ export default class Page extends Phaser.State {
       if (script.queues) {
         for (let queue of script.queues) {
           const { word, action } = queue;
-          const match = page.getLine().split(' ').slice(0, choke);
+          const match = page.getLine().split(' ').slice(0, choke).map(strip);
 
           // Trigger queues that have not been previously triggered
           if (!triggered.includes(action) && match.includes(word)) {
             // Bundle queues using `running` promise
-            running = running.then(() => this.trigger(queue.action));
+            this.next(() => this.trigger(queue.action));
 
             // Notify application of keyword
             send('keyword', word);

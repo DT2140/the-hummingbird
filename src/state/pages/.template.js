@@ -26,7 +26,7 @@ export default class MyPage extends Page {
     const tween = this.game.add.tween(bird);
     this.queue('myAction', done => {
       // Also, make sure to call the `done` callback when complete
-      tween.to({ x: 400 }, 2000, 'Linear', true, 0).onComplete(done);
+      tween.to({ x: 400 }, 2000, 'Linear', true, 0).onComplete.add(done);
     });
   }
 
