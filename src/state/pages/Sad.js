@@ -4,7 +4,7 @@ export default class Sad extends Page {
   preload(){
     this.loadSky('sky.png');
     this.loadBackground('mountain-wide.png');
-	      //this.loadMiddleground('...');
+    this.loadMiddleground('lake.png');
     this.loadForeground('branch2.png');
 	  
     this.game.load.video('sad', '/assets/animations/03.Son.Sad.webm');
@@ -14,18 +14,20 @@ export default class Sad extends Page {
   }
   create(){
     super.create();
+
+    this.middleground.position.set(0, this.background.y + this.background.height);
 	
     const sad = this.game.add.video('sad');
     sad.loop = false;
-    sad.addToWorld(this.foreground.width/ 2, this.foreground.height/2, 0.3, 0.6, 0.225, 0.225);
+    sad.addToWorld(this.foreground.width * 0.4, this.foreground.height * 0.41, 0.5, 0.5, 0.225, 0.225);
 		
     const angry = this.game.add.video('angry');
     angry.loop = false;
-    angry.addToWorld(this.foreground.width/ 2, this.foreground.height/2,.9, 1.2, 0.15, 0.15);
+    angry.addToWorld(this.foreground.width * 0.21, this.foreground.height * 0.15, 0.5, 0.5, 0.15, 0.15);
 		
     const observing = this.game.add.video('observing');
     observing.loop = true;
-    observing.addToWorld(this.foreground.width/ 2, this.foreground.height/2, 0, 0, 0.15, 0.15);
+    observing.addToWorld(this.foreground.width * 0.77, this.foreground.height * 0.45, 0.5, 0.5, 0.15, 0.15);
     observing.play(true);
 		
 	
