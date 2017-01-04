@@ -38,24 +38,24 @@
     }
 
     .Microphone-center {
-      fill: gray;
+      fill: #00acff;
     }
 
     .Microphone.is-pressed .Microphone-center {
-      stroke: red;
+      stroke: #ff3c00;
       stroke-width: 3px;
       fill: pink;
     }
 
     .Microphone.is-active .Microphone-center {
-      fill: red;
+      fill: #ff3c00;
     }
 
     .Microphone-meter {
       fill: transparent;
       stroke-dasharray: calc(2 * 33.5px * 3.14);
       stroke-dashoffset: 0;
-      stroke: red;
+      stroke: #00acff;
       stroke-width: 6px;
       transform: scale(0.5) rotate(-90deg);
       transform-origin: center;
@@ -76,7 +76,12 @@
       display: none;
     }
 
-    .Microphone.is-loading .Microphone-icon {
+    .Microphone:not(.is-done) .Microphone-arrow {
+      display: none;
+    }
+
+    .Microphone.is-loading .Microphone-icon,
+    .Microphone.is-done .Microphone-icon {
       display: none;
     }
 
@@ -114,10 +119,10 @@
         transform: scale(1);
       }
       50% {
-        transform: scale(1.6);
+        transform: scale(1.8);
       }
       100% {
-        transform: scale(1.15);
+        transform: scale(1.2);
       }
     }
 
@@ -149,14 +154,13 @@
 
     .Subtitle-word.is-match {
       color: #222;
+    }
+
+    .Subtitle-word.is-keyword {
       animation-name: Subtitle-word--pop;
       animation-fill-mode: forwards;
       animation-duration: 200ms;
       animation-timing-function: ease-out;
-    }
-
-    .Subtitle-word.is-keyword {
-      color: #5dda6b;
     }
   </style>
 </head>
@@ -229,6 +233,7 @@
         <circle r="25" cx="40" cy="40" class="Microphone-center"></circle>
         <use width="32px" height="32px" xlink:href="#microphone" class="Microphone-icon" transform="translate(24 23)"></use>
         <use width="32px" height="32px" xlink:href="#loader"  class="Microphone-loader" transform="translate(24.5 23.5)"></use>
+        <polygon stroke="none" fill="#FFFFFF" fill-rule="evenodd" class="Microphone-arrow" points="25 16 2.77555756e-15 32 0 0" transform="translate(32 26) scale(0.9)"></polygon>
       </svg>
     </button>
     <p class="Subtitle">

@@ -1,62 +1,31 @@
 {
   "lang": "en-US",
-  "pages": 
-  [
-  {
-    "lines": 
-	[
-      "Once upon a time there was a lake and in the lake there was a tree"
+  "pages": [{
+    "lines": [
+      "/Once upon /a time /there was /a tree /in a lake"
     ],
-    "queues": 
-	[
-	  {
-        "word": "tree",
-        "action": "showTree"
-      }
-	]
-  }, 
-  {
-    "lines": 
-	[
-      "In the tree there lived a hummingbird that wanted to fly"
+    "queues": [{
+      "word": "tree",
+      "action": "showTree"
+    }]
+  }, {
+    "lines": [
+      "/In the tree /there lived /a hummingbird /that wanted /to fly"
     ],
-    "queues": 
-	[
-	  {
-        "word": "fly",
-        "action": "hummingbirdFly"
-	  }
-	 ]
-  }, 
-  {
-    "lines": 
-	[
-      "But her mother told her she was too young"
+    "queues": [{
+      "word": "fly",
+      "action": "hummingbirdFly"
+	}]
+  }, {
+    "lines": [
+      "/But /her mother /told her /she is too young /to fly"
     ],
-    "queues": 
-	[
-	  {
-        "word": "mother",
-        "action": "angryMother"
-      }, 
-	  {
-        "word": "young",
-        "action": "sadHummingbird"
-      }
-	]
-  },
-  {
-    "lines": 
-	[
-      "One day her parents flew from the nest"
-    ],
-    "queues": 
-	[
-	  {
-        "word": "flew",
-        "action": "flewAway"
-	  }
-	]
-  }
-  ]
+    "queues": [{
+      "word": "mother",
+      "action": "angryMother"
+    }, {
+      "word": "fly",
+      "action": "sadHummingbird"
+    }]
+  }]
 }

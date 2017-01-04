@@ -1,3 +1,5 @@
+import { strip } from '../../utils/transcript';
+
 export default class Page extends Phaser.State {
   constructor(script, subscribe) {
     super();

@@ -58,7 +58,7 @@ export default function createState(story, script) {
 
         case 'choke': return merge(state, {
           choke: data,
-          isMatch: data >= state.page.getLine().split(' ').length,
+          isMatch: data === state.page.getLine().split(' ').length
         });
 
         case 'keyword': return merge(state, {
@@ -84,7 +84,7 @@ export default function createState(story, script) {
         // Relay that user is speaking to state
         case 'speaking': return merge(state, {
           isSpeaking: data,
-          transcript: ''
+          transcript: data ? '' : state.transcript
         });
 
         // Just return prevous state for unrecognized actions

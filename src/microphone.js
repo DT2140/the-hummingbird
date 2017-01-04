@@ -1,3 +1,5 @@
+import { strip } from './utils/transcript';
+
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
 
@@ -35,14 +37,14 @@ export default function microphone(button, lang) {
 
     sendMatch = () => send('transcript', {
       isFinal: true,
-      transcript: nextLine
+      transcript: strip(nextLine)
     });
     sendNext = () => {
       const nextWord = nextLine.split(' ').slice(choke, choke + 1);
 
       send('transcript', {
         isFinal: true,
-        transcript: `${ transcript } ${ nextWord }`.trim()
+        transcript: strip(`${ transcript } ${ nextWord }`)
       });
     };
 
@@ -52,8 +54,16 @@ export default function microphone(button, lang) {
 
     if (isMatch && !isTicking) {
       isTicking = true;
-      button.classList.add('is-ticking');
-      timeout = setTimeout(() => send('page', index + 1), 3800);
+      page.next(() => {
+        if (isTicking) {
+          button.classList.add('is-ticking', 'is-done');
+          send('isSpeaking', false);
+          timeout = setTimeout(() => {
+            recognition.abort();
+            send('page', index + 1);
+          }, 3800);
+        }
+      });
     }
 
     /**
@@ -75,16 +85,17 @@ export default function microphone(button, lang) {
       grammars.addFromString(`#JSGF V1.0; grammar line; public <line> = ${ nextLine.toLowerCase() } ;`, 1);
       recognition.grammars = grammars;
       line = nextLine;
+      button.classList.remove('is-done');
     }
 
     /**
      * Handle when the user starts speaking
      */
 
+    button.classList.toggle('is-active', isSpeaking && !isMatch);
     if (isSpeaking !== prev.isSpeaking) {
-      button.classList.toggle('is-active', isSpeaking);
 
-      if (isSpeaking) {
+      if (isSpeaking && !isMatch) {
         recognition.start();
       } else {
         recognition.stop();
@@ -111,8 +122,8 @@ export default function microphone(button, lang) {
        * Hook up event listeners to handle speaking
        */
 
-      button.addEventListener('mousedown', onStart);
-      button.addEventListener('touchstart', onStart);
+      button.addEventListener('mousedown', () => onStart());
+      button.addEventListener('touchstart', () => onStart());
       window.addEventListener('keydown', event => {
         if (isPressed) {
           if (event.which === 88 && ENV === 'development') {
@@ -127,8 +138,8 @@ export default function microphone(button, lang) {
         }
       });
 
-      button.addEventListener('mouseup', onEnd);
-      button.addEventListener('touchend', onEnd);
+      button.addEventListener('mouseup', () => onEnd());
+      button.addEventListener('touchend', () => onEnd());
       window.addEventListener('keyup', event => {
         if (event.which === 32) {
           onEnd();
@@ -193,6 +204,7 @@ export default function microphone(button, lang) {
          */
 
         onend() {
+          if (isTicking) { return; }
           send('transcript', { transcript: final, isFinal: true });
         }
       });

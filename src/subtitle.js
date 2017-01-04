@@ -1,5 +1,6 @@
 import similarity from './utils/similarity';
 import spawnParticles from './utils/particles';
+import { strip } from './utils/transcript';
 
 const PRECISION = parseFloat(process.env.STORY_RECOGNITION_PRECISION);
 
@@ -27,7 +28,7 @@ export default function subtitles(element) {
          */
 
         for (var i = stoppedOn; i < words.length; i += 1) {
-          const script = words.slice(stoppedOn, i + 1).join(' ');
+          const script = words.slice(stoppedOn, i + 1).map(strip).join(' ');
           const result = results.slice(0, i - stoppedOn + 1).join(' ');
           const match = similarity(script, result);
 
@@ -38,6 +39,20 @@ export default function subtitles(element) {
 
           children[i].classList.remove('is-loading');
           children[i].classList.toggle('is-match', isMatch);
+        }
+
+        /**
+         * Roll back choke to closest phrase break
+         */
+
+        if (!isMatch && !/^\//.test(words[chokedOn])) {
+          for (let i = chokedOn; i > -1; i -= 1) {
+            element.children[i].classList.remove('is-match');
+            if (/^\//.test(words[i])) {
+              chokedOn = i;
+              break;
+            }
+          }
         }
 
         if (chokedOn > stoppedOn) {
@@ -59,7 +74,7 @@ export default function subtitles(element) {
 
   function setText(text) {
     const children = text.split(' ').map(word => {
-      return `<span class="Subtitle-word">${ word }</span>`;
+      return `<span class="Subtitle-word">${ strip(word) }</span>`;
     });
 
     element.innerHTML = children.join(' ');
@@ -71,6 +86,7 @@ export default function subtitles(element) {
     if (prev.page.getLine() !== script) {
       setText(script);
       stoppedOn = 0;
+      chokedOn = 0;
     }
 
     if (!state.isSpeaking && !state.isLoading) {
