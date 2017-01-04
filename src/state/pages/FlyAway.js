@@ -5,37 +5,34 @@ export default class FlyAway extends Page {
     this.loadSky('sky.png');
     this.loadBackground('mountain-wide.png');
 	      //this.loadMiddleground('...');
-    this.loadForeground('branch2.png');
+    this.loadForeground('branch3.png');
 	  
-    this.game.load.video('wave', '/assets/animations/04.Son.Wave');
-    this.game.load.video('motherFly', '/assets/animations/04.Mother.FlyAway');
-    this.game.load.video('fatherFly', '/assets/animations/04.Father.FlyAway');
+    this.game.load.video('wave', '/assets/animations/04.Son.Wave.webm');
+    this.game.load.video('motherFly', '/assets/animations/04.Mother.FlyAway.webm');
+    this.game.load.video('fatherFly', '/assets/animations/04.Father.FlyAway.webm');
 
   }
   create(){
     super.create();
+
+	this.foreground.position.set(0, this.foreground.height/3);
 	
-    const sad = this.game.add.video('wave');
-    sad.loop = false;
-    sad.addToWorld(this.foreground.width/ 2, this.foreground.height/2, 0.3, 0.6, 0.225, 0.225);
-		
-    const angry = this.game.add.video('motherFly');
-    angry.loop = false;
-    angry.addToWorld(this.foreground.width/ 2, this.foreground.height/2,.9, 1.2, 0.15, 0.15);
-		
-    const observing = this.game.add.video('fatehrFly');
-    observing.loop = true;
-    observing.addToWorld(this.foreground.width/ 2, this.foreground.height/2, 0, 0, 0.15, 0.15);
-    observing.play(true);
-		
-	//TODO: fix so both animatons can play at the same time	
+    const motherFly = this.game.add.video('motherFly');
+    motherFly.loop = false;
+    motherFly.addToWorld(this.foreground.width/ 2, this.foreground.height/2, 0.3, 0.6, 0.225, 0.225);
 	
-    this.queue('angryMother', done => {
-      angry.play(true).onComplete.add(done);
-    })
-	
-    this.queue('sadHummingbird', done => {
-      sad.play(true).onComplete.add(done);
+    const fatherFly = this.game.add.video('fatherFly');
+    fatherFly.loop = false;
+    fatherFly.addToWorld(this.foreground.width/ 2, this.foreground.height/2,.9, 1.2, 0.15, 0.15);
+		
+    const wave = this.game.add.video('wave');
+    wave.loop = true;
+    wave.addToWorld(this.foreground.width/ 2, this.foreground.height/2, 0, 0, 0.15, 0.15);
+    wave.play(true);
+
+    this.queue('flewAway', done => {
+	  fatehrFly.play(true);
+	  motherfly.play(true).onComplete.add(done);
     })
   }
 }

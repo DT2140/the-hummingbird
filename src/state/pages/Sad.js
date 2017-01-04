@@ -28,14 +28,10 @@ export default class Sad extends Page {
     observing.addToWorld(this.foreground.width/ 2, this.foreground.height/2, 0, 0, 0.15, 0.15);
     observing.play(true);
 		
-	//TODO: fix so both animatons can play at the same time	
 	
     this.queue('angryMother', done => {
+	  sad.play(true);
       angry.play(true).onComplete.add(done);
-    })
-	
-    this.queue('sadHummingbird', done => {
-      sad.play(true).onComplete.add(done);
     })
   }
 }
