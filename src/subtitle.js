@@ -21,7 +21,7 @@ export default function subtitles(element) {
 
         let isMatch = true;
 
-        chokedOn = 0;
+        chokedOn = words.length;
 
         /**
          * Run through all words in script and determine matches
@@ -86,6 +86,7 @@ export default function subtitles(element) {
     if (prev.page.getLine() !== script) {
       setText(script);
       stoppedOn = 0;
+      chokedOn = 0;
     }
 
     if (!state.isSpeaking && !state.isLoading) {

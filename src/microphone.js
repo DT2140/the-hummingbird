@@ -55,12 +55,14 @@ export default function microphone(button, lang) {
     if (isMatch && !isTicking) {
       isTicking = true;
       page.next(() => {
-        button.classList.add('is-ticking');
-        timeout = setTimeout(() => {
-          recognition.abort();
-          send('isSpeaking', false);
-          send('page', index + 1);
-        }, 3800);
+        if (isTicking) {
+          button.classList.add('is-ticking');
+          timeout = setTimeout(() => {
+            recognition.abort();
+            send('isSpeaking', false);
+            send('page', index + 1);
+          }, 3800);
+        }
       });
     }
 

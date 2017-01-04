@@ -58,7 +58,7 @@ export default function createState(story, script) {
 
         case 'choke': return merge(state, {
           choke: data,
-          isMatch: data >= state.page.getLine().split(' ').length,
+          isMatch: data === state.page.getLine().split(' ').length,
         });
 
         case 'keyword': return merge(state, {
