@@ -31,10 +31,17 @@
         {
           "word": "mother",
           "action": "angryMother"
-        },
+        }
+      ]
+    },
+	{
+      "lines": [
+        "/One day /her parents /flew from /the nest"
+      ],
+      "queues": [
         {
-          "word": "fly",
-          "action": "sadHummingbird"
+          "word": "flew",
+          "action": "flewAway"
         }
       ]
     }

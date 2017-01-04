@@ -31,11 +31,13 @@ export default class Sad extends Page {
 	//TODO: fix so both animatons can play at the same time	
 	
     this.queue('angryMother', done => {
+	  sad.play(true);
       angry.play(true).onComplete.add(done);
     })
-	
+	/*
     this.queue('sadHummingbird', done => {
       sad.play(true).onComplete.add(done);
     })
+	*/
   }
 }
