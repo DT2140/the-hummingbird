@@ -3,7 +3,9 @@ import Page from './Page';
 export default class OnceUpon extends Page {
   preload() {
     //set sprites
-    this.loadBackground('sky2.png');
+    
+	this.loadSky('sky.png');
+	//this.loadBackground('...');
     this.loadMiddleground('mountains.png');
     this.loadForeground('tree.png');
     //TODO add lake
@@ -29,7 +31,6 @@ export default class OnceUpon extends Page {
         done();
       });
 	})
-
   }
 //tween function
   tweenImage(sprite, position, time) {

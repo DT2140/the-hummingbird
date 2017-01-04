@@ -40,7 +40,7 @@ export default class Page extends Phaser.State {
       if (script.queues) {
         for (let queue of script.queues) {
           const { word, action } = queue;
-          const match = page.getLine().split(' ').slice(0, choke).map(strip);
+          const match = page.getLine().split(' ').slice(0, choke);
 
           // Trigger queues that have not been previously triggered
           if (!triggered.includes(action) && match.includes(word)) {
@@ -55,6 +55,11 @@ export default class Page extends Phaser.State {
     });
   }
 
+  loadSky(skyImage) {
+    this.game.load.image('sky', '/assets/sky/' + skyImage);
+    this.hasSky = true;
+  }
+  
   loadBackground(backgroundImage) {
     this.game.load.image('background', '/assets/backgrounds/' + backgroundImage);
     this.hasBackgroud = true;
@@ -80,6 +85,10 @@ export default class Page extends Phaser.State {
 
   create() {
     this.game.stage.backgroundColor = 0xffffff;
+	
+	if (this.hasSky)
+      this.sky = this.game.add.sprite(0, 0, 'sky');
+      this.fillCenter(this.sky);
 
     if (this.hasBackgroud) {
       this.background = this.game.add.sprite(0, 0, 'background');

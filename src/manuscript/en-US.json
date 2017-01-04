@@ -18,11 +18,14 @@
 	}]
   }, {
     "lines": [
-      "/But /the hummingbirds mother said /he is too young /to fly"
+      "/But /her mother /told her /she is too young /to fly"
     ],
     "queues": [{
       "word": "mother",
-      "action": "angry"
+      "action": "angryMother"
+    }, {
+      "word": "fly",
+      "action": "sadHummingbird"
     }]
   }]
 }
