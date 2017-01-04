@@ -74,6 +74,7 @@ export default function createState(story, script) {
             transcript: '',
             isMatch: false,
             isLoading: false,
+            choke: 0,
             keywords: [],
             index: data,
             page: pages[data]
