@@ -119,10 +119,10 @@
         transform: scale(1);
       }
       50% {
-        transform: scale(1.8);
+        transform: scale(2);
       }
       100% {
-        transform: scale(1.2);
+        transform: scale(1.3);
       }
     }
 
@@ -141,7 +141,7 @@
     .Subtitle-word {
       display: inline-block;
       position: relative;
-      color: #8c8c8c;
+      color: #444;
       transition: color 200ms ease-out;
     }
 
@@ -153,13 +153,13 @@
     }
 
     .Subtitle-word.is-match {
-      color: #222;
     }
 
     .Subtitle-word.is-keyword {
+      color: #222;
       animation-name: Subtitle-word--pop;
       animation-fill-mode: forwards;
-      animation-duration: 200ms;
+      animation-duration: 300ms;
       animation-timing-function: ease-out;
     }
   </style>

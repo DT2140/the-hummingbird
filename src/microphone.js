@@ -6,7 +6,7 @@ const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammar
 const ENV = process.env.NODE_ENV;
 
 export default function microphone(button, lang) {
-  let line, timeout, sendMatch, sendNext;
+  let line, timeout;
   let isTicking = false;
   let isInitialized = false;
   let isPressed = false;
@@ -30,23 +30,6 @@ export default function microphone(button, lang) {
     const { isSpeaking, isMatch, page, index, choke, transcript } = state;
     const nextLine = page.getLine();
     let isActive = false;
-
-    /**
-     * Redefine on every state change so as to always use latest state
-     */
-
-    sendMatch = () => send('transcript', {
-      isFinal: true,
-      transcript: strip(nextLine)
-    });
-    sendNext = () => {
-      const nextWord = nextLine.split(' ').slice(choke, choke + 1);
-
-      send('transcript', {
-        isFinal: true,
-        transcript: strip(`${ transcript } ${ nextWord }`)
-      });
-    };
 
     /**
      * Start a ticker when transcript matches script
@@ -94,7 +77,6 @@ export default function microphone(button, lang) {
 
     button.classList.toggle('is-active', isSpeaking && !isMatch);
     if (isSpeaking !== prev.isSpeaking) {
-
       if (isSpeaking && !isMatch) {
         recognition.start();
       } else {
@@ -125,15 +107,9 @@ export default function microphone(button, lang) {
       button.addEventListener('mousedown', () => onStart());
       button.addEventListener('touchstart', () => onStart());
       window.addEventListener('keydown', event => {
-        if (isPressed) {
-          if (event.which === 88 && ENV === 'development') {
-            sendMatch();
-          } else if (event.which === 90 && ENV === 'development') {
-            sendNext();
-          }
-        } else if (event.which === 32) {
-          onStart();
+        if (!isPressed && event.which === 32) {
           isPressed = true;
+          onStart();
           event.preventDefault();
         }
       });
@@ -142,8 +118,8 @@ export default function microphone(button, lang) {
       button.addEventListener('touchend', () => onEnd());
       window.addEventListener('keyup', event => {
         if (event.which === 32) {
-          onEnd();
           isPressed = false;
+          onEnd();
           event.preventDefault();
         }
       });
@@ -204,7 +180,7 @@ export default function microphone(button, lang) {
          */
 
         onend() {
-          if (isTicking) { return; }
+          if (isTicking || !final) { return; }
           send('transcript', { transcript: final, isFinal: true });
         }
       });

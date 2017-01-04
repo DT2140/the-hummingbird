@@ -85,27 +85,26 @@ export default function subtitles(element) {
 
     if (prev.page.getLine() !== script) {
       setText(script);
-      stoppedOn = 0;
-      chokedOn = 0;
     }
 
-    if (!state.isSpeaking && !state.isLoading) {
-      stoppedOn = chokedOn;
+    const words = script.split(' ').map(strip);
 
-      for (let child of element.children) {
-        child.classList.remove('is-loading');
-      }
-    }
-
-    const words = script.split(' ');
     for (let i = 0; i < words.length; i += 1) {
       if (state.keywords.includes(words[i])) {
-        element.children[i].classList.add('is-keyword');
+        const child = element.children[i];
+
+        if (!child.classList.contains('is-keyword')) {
+          const { left, top, width } = child.getBoundingClientRect();
+
+          spawnParticles(left + width / 2, top + 10);
+
+          child.classList.add('is-keyword');
+        }
       }
     }
 
     if (state.transcript !== prev.transcript) {
-      nextTick(script, state.transcript, state.keywords, send);
+      // nextTick(script, state.transcript, state.keywords, send);
     } else if (!isInitialized) {
       setText(state.page.getLine());
       isInitialized = true;

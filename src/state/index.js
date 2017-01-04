@@ -50,20 +50,29 @@ export default function createState(story, script) {
       }
 
       switch (action) {
-        // Store transcript and wether it is a complete match
-        case 'transcript': return merge(state, {
-          isLoading: !data.isFinal,
-          transcript: data.transcript
-        });
 
-        case 'choke': return merge(state, {
-          choke: data,
-          isMatch: data === state.page.getLine().split(' ').length
-        });
+        case 'transcript': {
+          const { keywords } = state;
+          const words = state.page.getLine();
+          const queues = script.pages[state.index].queues;
+          const next = merge(state, {
+            isLoading: !data.isFinal,
+            transcript: data.transcript
+          });
 
-        case 'keyword': return merge(state, {
-          keywords: [ data, ...state.keywords ]
-        });
+          for (let queue of queues) {
+            const { word } = queue;
+            if (data.transcript.match(word) && !keywords.includes(word)) {
+              next.keywords = keywords.concat([ word ]);
+            }
+          }
+
+          if (next.keywords.length === queues.length) {
+            next.isMatch = true;
+          }
+
+          return next;
+        }
 
         case 'page': {
           // Set page state in story

@@ -29,7 +29,7 @@ export default class Page extends Phaser.State {
     };
 
     subscribe((state, prev, send) => {
-      const { isMatch, transcript, page, choke } = state;
+      const { isMatch, transcript, page, choke, keywords } = state;
 
       // Progress through lines if there are more than one line
       if (isMatch && (script.lines.length > currentLine + 1)) {
@@ -40,15 +40,11 @@ export default class Page extends Phaser.State {
       if (script.queues) {
         for (let queue of script.queues) {
           const { word, action } = queue;
-          const match = page.getLine().split(' ').slice(0, choke).map(strip);
 
           // Trigger queues that have not been previously triggered
-          if (!triggered.includes(action) && match.includes(word)) {
+          if (keywords.includes(word) && !triggered.includes(action)) {
             // Bundle queues using `running` promise
             this.next(() => this.trigger(queue.action));
-
-            // Notify application of keyword
-            send('keyword', word);
           }
         }
       }
