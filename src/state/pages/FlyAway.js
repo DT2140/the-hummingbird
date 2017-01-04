@@ -30,9 +30,13 @@ export default class FlyAway extends Page {
     wave.addToWorld(this.foreground.width/ 2, this.foreground.height/2, 0, 0, 0.15, 0.15);
     wave.play(true);
 
+
     this.queue('flewAway', done => {
-	  fatehrFly.play(true);
-	  motherfly.play(true).onComplete.add(done);
+	  motherFly.play(true)
+	  setTimeout(() => { motherFly.destroy(); }, motherFly.duration * 1000);
+      fatherFly.play(true).onComplete.add(done)
+	  setTimeout(() => { fatherFly.stop(); }, fatherFly.duration * 1000);
+
     })
   }
 }

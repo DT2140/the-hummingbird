@@ -25,6 +25,7 @@ export default class TryFly extends Page {
     this.queue('hummingbirdFly', done => {
       hummingbird.play(true);
       setTimeout(done, hummingbird.duration * 1000);
+	  done();
     });
   }
 }
