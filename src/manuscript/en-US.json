@@ -1,31 +1,42 @@
 {
   "lang": "en-US",
-  "pages": [{
-    "lines": [
-      "/Once upon /a time /there was /a tree /in a lake"
-    ],
-    "queues": [{
-      "word": "tree",
-      "action": "showTree"
-    }]
-  }, {
-    "lines": [
-      "/In the tree /there lived /a hummingbird /that wanted /to fly"
-    ],
-    "queues": [{
-      "word": "fly",
-      "action": "hummingbirdFly"
-	}]
-  }, {
-    "lines": [
-      "/But /her mother /told her /she is too young /to fly"
-    ],
-    "queues": [{
-      "word": "mother",
-      "action": "angryMother"
-    }, {
-      "word": "fly",
-      "action": "sadHummingbird"
-    }]
-  }]
+  "pages": [
+    {
+      "lines": [
+        "/Once upon /a time /there was /a tree /in a lake"
+      ],
+      "queues": [
+        {
+          "word": "tree",
+          "action": "showTree"
+        }
+      ]
+    },
+    {
+      "lines": [
+        "/In the tree /there lived /a hummingbird /that wanted /to fly"
+      ],
+      "queues": [
+        {
+          "word": "fly",
+          "action": "hummingbirdFly"
+        }
+      ]
+    },
+    {
+      "lines": [
+        "/But /her mother /told her /she is too young /to fly"
+      ],
+      "queues": [
+        {
+          "word": "mother",
+          "action": "angryMother"
+        },
+        {
+          "word": "fly",
+          "action": "sadHummingbird"
+        }
+      ]
+    }
+  ]
 }
