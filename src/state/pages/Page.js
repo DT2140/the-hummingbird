@@ -38,7 +38,7 @@ export default class Page extends Phaser.State {
       if (script.queues) {
         for (let queue of script.queues) {
           const { word, action } = queue;
-          const match = page.getLine().split(' ').slice(0, choke).map(strip);
+          const match = page.getLine().split(' ').slice(0, choke);
 
           // Trigger queues that have not been previously triggered
           if (!triggered.includes(action) && match.includes(word)) {
