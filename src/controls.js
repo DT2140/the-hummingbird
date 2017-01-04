@@ -3,6 +3,7 @@ export default function controls() {
   let down = 0;
   let delta = 0;
   let onSwipe = () => {};
+  let gotoPage = () => {};
   let isTriggered = false;
 
   window.addEventListener('touchstart', event => {
@@ -22,8 +23,16 @@ export default function controls() {
       onSwipe(delta > 0 ? 1 : -1);
     }
   }, false);
+  window.addEventListener('keydown', event => {
+    const page = event.which - 48 - 1;
+
+    if (page > -1 && page < 10) {
+      gotoPage(page);
+    }
+  });
 
   return (state, prev, send) => {
     onSwipe = direction => send('page', state.index + direction);
+    gotoPage = page => send('page', page);
   };
 }
