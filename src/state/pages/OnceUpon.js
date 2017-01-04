@@ -5,9 +5,8 @@ export default class OnceUpon extends Page {
     //set sprites
 
     this.loadSky('sky.png');
-    this.loadBackground('mountain-wide.png');
-    //this.loadMiddleground('...');
-    //TODO add lake
+    this.loadBackground('mountain-lake.png');
+//  this.loadMiddleground('...');
     this.loadForeground('tree.png');
   }
 
@@ -15,13 +14,11 @@ export default class OnceUpon extends Page {
     super.create();
 
     this.background.scale.setTo(1, 1);
-    this.background.x -= (this.background.width - this.game.width) / 2;
 
     this.isTweened = false;
 
-    this.foreground.position.set(-this.foreground.width, 0);
+    this.foreground.position.set(-this.foreground.width, this.game.height - this.foreground.height);
     this.background.position.set(-this.background.width / 10, 0);
-
 
     this.queue('showTree', done => {
       this.tweenImage(this.foreground, 0, 4000);
