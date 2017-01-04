@@ -92,6 +92,12 @@ export default function microphone(button, lang) {
     }
 
     /**
+     * Handle loading state
+     */
+
+    button.classList.toggle('is-loading', !state.isSpeaking && state.isLoading);
+
+    /**
      * Set up speech recognition at the first chance
      */
 

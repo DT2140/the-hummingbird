@@ -1,12 +1,13 @@
 <!doctype html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>Speech POC in Phaser</title>
   <style>
     @import url('https://fonts.googleapis.com/css?family=Leckerli+One');
-
-    html, body {
+    html,
+    body {
       height: 100%;
       padding: 0;
       margin: 0;
@@ -29,11 +30,9 @@
       height: 80px;
       padding: 0;
       border: 0;
-
       position: absolute;
       right: 10px;
       top: 10px;
-
       outline: none;
       background: transparent;
     }
@@ -73,9 +72,21 @@
       animation-timing-function: linear;
     }
 
+    .Microphone:not(.is-loading) .Microphone-loader {
+      display: none;
+    }
+
+    .Microphone.is-loading .Microphone-icon {
+      display: none;
+    }
+
     @keyframes Microphone-meter--ticking {
-      from { stroke-dashoffset: 0; }
-      to { stroke-dashoffset: calc(2 * 33.5px * 3.14); }
+      from {
+        stroke-dashoffset: 0;
+      }
+      to {
+        stroke-dashoffset: calc(2 * 33.5px * 3.14);
+      }
     }
 
     .Subtitle {
@@ -88,30 +99,44 @@
 
     .Subtitle-text {
       display: inline-block;
-      padding: 0.5em 1em;
+      padding: 0.25em 0.5em;
       font-size: 24px;
       font-family: "Leckerli One", cursive, sans-serif;
       text-shadow: 1px 1px 0 #fff;
       word-spacing: 0.3em;
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 2px;
       -webkit-font-smoothing: antialiased;
     }
 
     @keyframes Subtitle-word--pop {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.6); }
-      100% { transform: scale(1.15); }
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.6);
+      }
+      100% {
+        transform: scale(1.15);
+      }
     }
 
     @keyframes Subtitle-word--pulsate {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        opacity: 1;
+      }
     }
 
     .Subtitle-word {
       display: inline-block;
       position: relative;
-      color: #a0a0a0;
+      color: #8c8c8c;
       transition: color 200ms ease-out;
     }
 
@@ -135,6 +160,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="App">
     <div class="Storyboard js-storyboard"></div>
@@ -145,10 +171,64 @@
             <path d="M237.541,328.897c25.128,0,46.632-8.946,64.523-26.83c17.888-17.884,26.833-39.399,26.833-64.525V91.365    c0-25.126-8.938-46.632-26.833-64.525C284.173,8.951,262.669,0,237.541,0c-25.125,0-46.632,8.951-64.524,26.84    c-17.893,17.89-26.838,39.399-26.838,64.525v146.177c0,25.125,8.949,46.641,26.838,64.525    C190.906,319.951,212.416,328.897,237.541,328.897z" fill="#FFFFFF"/>
             <path d="M396.563,188.15c-3.606-3.617-7.898-5.426-12.847-5.426c-4.944,0-9.226,1.809-12.847,5.426    c-3.613,3.616-5.421,7.898-5.421,12.845v36.547c0,35.214-12.518,65.333-37.548,90.362c-25.022,25.03-55.145,37.545-90.36,37.545    c-35.214,0-65.334-12.515-90.365-37.545c-25.028-25.022-37.541-55.147-37.541-90.362v-36.547c0-4.947-1.809-9.229-5.424-12.845    c-3.617-3.617-7.895-5.426-12.847-5.426c-4.952,0-9.235,1.809-12.85,5.426c-3.618,3.616-5.426,7.898-5.426,12.845v36.547    c0,42.065,14.04,78.659,42.112,109.776c28.073,31.118,62.762,48.961,104.068,53.526v37.691h-73.089    c-4.949,0-9.231,1.811-12.847,5.428c-3.617,3.614-5.426,7.898-5.426,12.847c0,4.941,1.809,9.233,5.426,12.847    c3.616,3.614,7.898,5.428,12.847,5.428h182.719c4.948,0,9.236-1.813,12.847-5.428c3.621-3.613,5.431-7.905,5.431-12.847    c0-4.948-1.81-9.232-5.431-12.847c-3.61-3.617-7.898-5.428-12.847-5.428h-73.08v-37.691    c41.299-4.565,75.985-22.408,104.061-53.526c28.076-31.117,42.12-67.711,42.12-109.776v-36.547    C401.998,196.049,400.185,191.77,396.563,188.15z" fill="#FFFFFF"/>
           </symbol>
+          <symbol id="loader" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <rect x="0" y="0" width="100" height="100" fill="none"></rect>
+            <g transform="translate(50 50)">
+              <g transform="rotate(0) translate(34 0)">
+                <circle cx="0" cy="0" r="8" fill="#ffffff">
+                  <animate attributeName="opacity" from="1" to="0.1" begin="0s" dur="1s" repeatCount="indefinite"></animate>
+                  <animateTransform attributeName="transform" type="scale" from="1.5,1.0" to="1.0,1.0" begin="0s" dur="1s" repeatCount="indefinite"></animateTransform>
+                </circle>
+              </g>
+              <g transform="rotate(45) translate(34 0)">
+                <circle cx="0" cy="0" r="8" fill="#ffffff">
+                  <animate attributeName="opacity" from="1" to="0.1" begin="0.12s" dur="1s" repeatCount="indefinite"></animate>
+                  <animateTransform attributeName="transform" type="scale" from="1.5,1.0" to="1.0,1.0" begin="0.12s" dur="1s" repeatCount="indefinite"></animateTransform>
+                </circle>
+              </g>
+              <g transform="rotate(90) translate(34 0)">
+                <circle cx="0" cy="0" r="8" fill="#ffffff">
+                  <animate attributeName="opacity" from="1" to="0.1" begin="0.25s" dur="1s" repeatCount="indefinite"></animate>
+                  <animateTransform attributeName="transform" type="scale" from="1.5,1.0" to="1.0,1.0" begin="0.25s" dur="1s" repeatCount="indefinite"></animateTransform>
+                </circle>
+              </g>
+              <g transform="rotate(135) translate(34 0)">
+                <circle cx="0" cy="0" r="8" fill="#ffffff">
+                  <animate attributeName="opacity" from="1" to="0.1" begin="0.37s" dur="1s" repeatCount="indefinite"></animate>
+                  <animateTransform attributeName="transform" type="scale" from="1.5,1.0" to="1.0,1.0" begin="0.37s" dur="1s" repeatCount="indefinite"></animateTransform>
+                </circle>
+              </g>
+              <g transform="rotate(180) translate(34 0)">
+                <circle cx="0" cy="0" r="8" fill="#ffffff">
+                  <animate attributeName="opacity" from="1" to="0.1" begin="0.5s" dur="1s" repeatCount="indefinite"></animate>
+                  <animateTransform attributeName="transform" type="scale" from="1.5,1.0" to="1.0,1.0" begin="0.5s" dur="1s" repeatCount="indefinite"></animateTransform>
+                </circle>
+              </g>
+              <g transform="rotate(225) translate(34 0)">
+                <circle cx="0" cy="0" r="8" fill="#ffffff">
+                  <animate attributeName="opacity" from="1" to="0.1" begin="0.62s" dur="1s" repeatCount="indefinite"></animate>
+                  <animateTransform attributeName="transform" type="scale" from="1.5,1.0" to="1.0,1.0" begin="0.62s" dur="1s" repeatCount="indefinite"></animateTransform>
+                </circle>
+              </g>
+              <g transform="rotate(270) translate(34 0)">
+                <circle cx="0" cy="0" r="8" fill="#ffffff">
+                  <animate attributeName="opacity" from="1" to="0.1" begin="0.75s" dur="1s" repeatCount="indefinite"></animate>
+                  <animateTransform attributeName="transform" type="scale" from="1.5,1.0" to="1.0,1.0" begin="0.75s" dur="1s" repeatCount="indefinite"></animateTransform>
+                </circle>
+              </g>
+              <g transform="rotate(315) translate(34 0)">
+                <circle cx="0" cy="0" r="8" fill="#ffffff">
+                  <animate attributeName="opacity" from="1" to="0.1" begin="0.87s" dur="1s" repeatCount="indefinite"></animate>
+                  <animateTransform attributeName="transform" type="scale" from="1.5,1.0" to="1.0,1.0" begin="0.87s" dur="1s" repeatCount="indefinite"></animateTransform>
+                </circle>
+              </g>
+            </g>
+          </symbol>
         </defs>
         <circle r="33.5" cx="40" cy="40" class="Microphone-meter"></circle>
         <circle r="25" cx="40" cy="40" class="Microphone-center"></circle>
-        <use width="32px" height="32px" xlink:href="#microphone" transform="translate(24 23)"></use>
+        <use width="32px" height="32px" xlink:href="#microphone" class="Microphone-icon" transform="translate(24 23)"></use>
+        <use width="32px" height="32px" xlink:href="#loader"  class="Microphone-loader" transform="translate(24.5 23.5)"></use>
       </svg>
     </button>
     <p class="Subtitle">
@@ -158,4 +238,5 @@
   <script src="lib.js"></script>
   <script src="index.js"></script>
 </body>
+
 </html>
