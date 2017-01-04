@@ -30,12 +30,9 @@ export default class FlyAway extends Page {
     wave.addToWorld(this.foreground.width/ 2, this.foreground.height/2, 0, 0, 0.15, 0.15);
     wave.play(true);
 
-	//TODO: fix so both animatons can play at the same time	
-
     this.queue('flewAway', done => {
 	  fatehrFly.play(true);
 	  motherfly.play(true).onComplete.add(done);
-
     })
   }
 }
