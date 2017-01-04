@@ -1,3 +1,5 @@
+import { strip } from './utils/transcript';
+
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const SpeechGrammarList = window.SpeechGrammarList || window.webkitSpeechGrammarList;
 
@@ -35,14 +37,14 @@ export default function microphone(button, lang) {
 
     sendMatch = () => send('transcript', {
       isFinal: true,
-      transcript: nextLine
+      transcript: strip(nextLine)
     });
     sendNext = () => {
       const nextWord = nextLine.split(' ').slice(choke, choke + 1);
 
       send('transcript', {
         isFinal: true,
-        transcript: `${ transcript } ${ nextWord }`.trim()
+        transcript: strip(`${ transcript } ${ nextWord }`)
       });
     };
 
@@ -52,8 +54,14 @@ export default function microphone(button, lang) {
 
     if (isMatch && !isTicking) {
       isTicking = true;
-      button.classList.add('is-ticking');
-      timeout = setTimeout(() => send('page', index + 1), 3800);
+      page.next(() => {
+        button.classList.add('is-ticking');
+        timeout = setTimeout(() => {
+          recognition.abort();
+          send('isSpeaking', false);
+          send('page', index + 1);
+        }, 3800);
+      });
     }
 
     /**
