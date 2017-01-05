@@ -20,12 +20,11 @@ export default class TryFly extends Page {
     this.foreground.y += this.foreground.height / 10;
 
     hummingbird.loop = false;
-	hummingbird.addToWorld(this.foreground.x + this.foreground.width / 2, this.foreground.y, 0.5, 0.5, 0.25, 0.25);
+    hummingbird.addToWorld(this.foreground.x + this.foreground.width / 2, this.foreground.y, 0.5, 0.5, 0.25, 0.25);
 
     this.queue('hummingbirdFly', done => {
       hummingbird.play(true);
       setTimeout(done, hummingbird.duration * 1000);
-	  done();
     });
   }
 }
