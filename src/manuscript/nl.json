@@ -1,0 +1,49 @@
+{
+  "lang": "nl",
+  "pages": [
+    {
+      "lines": [
+        "Er was eens een boom in een meer"
+      ],
+      "queues": [
+        {
+          "word": "boom",
+          "action": "showTree"
+        }
+      ]
+    },
+    {
+      "lines": [
+        "In de boom leefde een vogel die wilde vliegen"
+      ],
+      "queues": [
+        {
+          "word": "vliegen",
+          "action": "hummingbirdFly"
+        }
+      ]
+    },
+    {
+      "lines": [
+        "Maar haar moeder zei dat ze te jong was om te vliegen"
+      ],
+      "queues": [
+        {
+          "word": "moeder",
+          "action": "angryMother"
+        }
+      ]
+    },
+	{
+      "lines": [
+        "Op een dag vlogen haar ouders van het nest"
+      ],
+      "queues": [
+        {
+          "word": "vlogen",
+          "action": "flewAway"
+        }
+      ]
+    }
+  ]
+}

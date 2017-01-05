@@ -83,12 +83,19 @@ export default class Page extends Phaser.State {
     sprite.position.set(0, (game.height / 2) - (sprite.height / 2));
   }
 
+  fillScreen(sprite) {
+    const { game } = this;
+
+    sprite.scale.setTo(game.width / sprite.width, game.height / sprite.height);
+    sprite.position.set(0, 0);
+  }
+
   create() {
     this.game.stage.backgroundColor = 0xffffff;
 
     if (this.hasSky) {
       this.sky = this.game.add.sprite(0, 0, 'sky');
-      this.fillCenter(this.sky);
+      this.fillScreen(this.sky);
     }
 
     if (this.hasBackgroud) {
