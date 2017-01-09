@@ -8,8 +8,7 @@
     "build:lib": "browserify src/lib.js -o public/lib.js",
     "build": "npm run build:lib && npm run build:app",
     "dev": "budo src/index.js:index.js --dir public -- -t babelify -t -t localenvify -t brfs",
-    "start": "serve public",
-    "deploy": "now -e STORY_LANG=en-US -e STORY_RECOGNITION_PRECISION=0.75"
+    "start": "serve public"
   },
   "author": "",
   "license": "MIT",
