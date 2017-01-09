@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+  <title>Google Speech API</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+  <script>
+    (function () {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      const screen = document.getElementById('app');
+      const script = 'Once upon a time there was a hummingbird';
+
+      let isPressed = false;
+      window.addEventListener('keydown', event => {
+        if (!isPressed && event.which === 32) {
+          isPressed = true;
+          recognition.start();
+          event.preventDefault();
+        }
+      });
+      window.addEventListener('keyup', event => {
+        if (isPressed && event.which === 32) {
+          isPressed = false;
+          recognition.stop();
+          event.preventDefault();
+        }
+      });
+
+      let final = '';
+      Object.assign(recognition, {
+        continuous: true,
+        interimResults: true,
+        lang: 'en-US',
+        maxAlternatives: 1,
+        onstart() {
+          final = '';
+        },
+        onresult(event) {
+          const { resultIndex, results } = event;
+          let interim = '';
+
+          for (let i = resultIndex; i < results.length; i += 1) {
+            if (results[i].isFinal) {
+              final += results[i][0].transcript;
+            } else {
+              interim += results[i][0].transcript;
+            }
+          }
+
+          if (interim) {
+            output(`
+              <strong>Match</strong>: ${ similarity(interim, segment(interim)) }<br>
+              <strong>Transcript</strong>: ${ interim }<br>
+            `);
+          }
+        },
+        onend() {
+          output(`
+            <strong>Match</strong>: ${ similarity(final, segment(final)) }<br>
+            <strong>Transcript (final)</strong>: ${ final }<br>
+          `);
+        }
+      });
+
+      function output(html) {
+        screen.innerHTML += `<br>${ html }`;
+        requestAnimationFrame(() => {
+          window.scrollTop = screen .offsetHeight - window.innerHeight;
+        });
+      }
+
+      function segment(src) {
+        return script.split(' ').slice(0, src.split(' ').length).join(' ');
+      }
+
+      function similarity(s1, s2) {
+        let longer = s1;
+        let shorter = s2;
+
+        if (s1.length < s2.length) {
+          longer = s2;
+          shorter = s1;
+        }
+
+        const longerLength = longer.length;
+
+        if (longerLength === 0) {
+          return 1.0;
+        }
+
+        return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength, 10);
+      }
+
+      function editDistance(s1, s2) {
+        s1 = s1.toLowerCase();
+        s2 = s2.toLowerCase();
+
+        const costs = [];
+
+        for (let i = 0; i <= s1.length; i += 1) {
+          let lastValue = i;
+
+          for (let j = 0; j <= s2.length; j += 1) {
+            if (i === 0) {
+              costs[j] = j;
+            } else {
+              if (j > 0) {
+                let newValue = costs[j - 1];
+
+                if (s1.charAt(i - 1) != s2.charAt(j - 1)) {
+                  newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                }
+
+                costs[j - 1] = lastValue;
+                lastValue = newValue;
+              }
+            }
+          }
+
+          if (i > 0) {
+            costs[s2.length] = lastValue;
+          }
+        }
+
+        return costs[s2.length];
+      }
+    }());
+  </script>
+</body>
+</html>
