@@ -7,7 +7,9 @@
     "build:app": "browserify src/index.js -t babelify -t -t localenvify -t brfs -g unassertify -o public/index.js",
     "build:lib": "browserify src/lib.js -o public/lib.js",
     "build": "npm run build:lib && npm run build:app",
-    "dev": "budo src/index.js:index.js --dir public -- -t babelify -t -t localenvify -t brfs"
+    "dev": "budo src/index.js:index.js --dir public -- -t babelify -t -t localenvify -t brfs",
+    "start": "serve public",
+    "deploy": "now -e STORY_LANG=en-US -e STORY_RECOGNITION_PRECISION=0.75"
   },
   "author": "",
   "license": "MIT",
@@ -20,10 +22,12 @@
     "localenvify": "^1.0.1",
     "phaser": "^2.6.2",
     "send-action": "^3.0.0",
+    "serve": "^2.1.2",
     "uglify-js": "^2.7.5",
     "unassertify": "^2.0.3"
   },
   "devDependencies": {
-    "eslint": "^3.12.1"
+    "eslint": "^3.12.1",
+    "now": "^1.0.0"
   }
 }
