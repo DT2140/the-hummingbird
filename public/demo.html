@@ -3,31 +3,58 @@
 <head>
   <title>Google Speech API</title>
   <style>
-    body {
+    html, body {
+      padding: 0;
+      margin: 0;
       font-family: sans-serif;
+    }
+
+    .Microphone {
+      box-sizing: border-box;
+      width: 40px;
+      height: 40px;
+      padding: 11px 0;
+
+      position: fixed;
+      top: 20px;
+      right: 20px;
+
+      color: #fff;
+      text-align: center;
+      font-weight: bold;
+      background: #00acff;
+      border-radius: 50%;
+    }
+
+    .Microphone.is-active {
+      background: #ff3c00;
     }
   </style>
 </head>
 <body>
   <div id="app"></div>
+  <div id="mic" class="Microphone">MIC</div>
   <script>
     (function () {
       const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
+      const mic = document.getElementById('mic');
       const screen = document.getElementById('app');
       const script = 'Once upon a time there was a hummingbird';
 
       let isPressed = false;
       window.addEventListener('keydown', event => {
-        if (!isPressed && event.which === 32) {
+        if (!isPressed && event.which === 77) {
           isPressed = true;
+          mic.classList.add('is-active');
           recognition.start();
           event.preventDefault();
         }
       });
       window.addEventListener('keyup', event => {
-        if (isPressed && event.which === 32) {
+        if (isPressed && event.which === 77) {
           isPressed = false;
+          mic.classList.remove('is-active');
           recognition.stop();
           event.preventDefault();
         }
@@ -57,22 +84,22 @@
           if (interim) {
             output(`
               <strong>Match</strong>: ${ similarity(interim, segment(interim)) }<br>
-              <strong>Transcript</strong>: ${ interim }<br>
+              <strong>Transcript</strong>: ${ interim }
             `);
           }
         },
         onend() {
           output(`
             <strong>Match</strong>: ${ similarity(final, segment(final)) }<br>
-            <strong>Transcript (final)</strong>: ${ final }<br>
+            <strong>Transcript (final)</strong>: ${ final }
           `);
         }
       });
 
       function output(html) {
-        screen.innerHTML += `<br>${ html }`;
+        screen.innerHTML += `<br>${ html }<br>`;
         requestAnimationFrame(() => {
-          window.scrollTop = screen .offsetHeight - window.innerHeight;
+          document.body.scrollTop = screen.offsetHeight - window.innerHeight;
         });
       }
 
