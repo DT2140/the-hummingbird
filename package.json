@@ -8,6 +8,7 @@
     "build:lib": "browserify src/lib.js -o public/lib.js",
     "build": "npm run build:lib && npm run build:app",
     "dev": "budo src/index.js:index.js --dir public -- -t babelify -t -t localenvify -t brfs",
+    "prestart": "npm run build",
     "start": "serve public"
   },
   "author": "",
@@ -26,7 +27,6 @@
     "unassertify": "^2.0.3"
   },
   "devDependencies": {
-    "eslint": "^3.12.1",
-    "now": "^1.0.0"
+    "eslint": "^3.12.1"
   }
 }
